@@ -8,14 +8,14 @@
 #   matrixCount = Number of screens
 #   matrixFlip = Flip the even matrices (1=true)
 
-LEDFormat = {"matrixRows": 32,
-             "matrixCols": 64,
+LEDFormat = {"matrixRows": 16,
+             "matrixCols": 32,
              "matrixCount": 2,
              "matrixMapper": "U-mapper;Rotate:180",
              "matrixDriver": "adafruit-hat-pwm"}
 
 # A dictionary with the location of the canvases. The None will be filled in by the object names before use
-CanvasPositions = {"Time": [(0, 0), None],
-                   "Date": [(37, 0), None],
-                   "WeatherNow": [(0, 16), None],
-                   "RotateWeather": [(0, 48), None]}
+CanvasPositions = {"Time": [(0, 0), None]}
+#                   "Date": [(37, 0), None],
+#                    "WeatherNow": [(0, 16), None],
+#                   "RotateWeather": [(0, 48), None]}
