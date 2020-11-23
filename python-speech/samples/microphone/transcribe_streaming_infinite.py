@@ -224,7 +224,9 @@ def listen_print_loop(responses, stream):
 
             # Exit recognition if any of the transcribed phrases could be
             # one of our keywords.
-            if re.search(r"\b(종료|종료)\b", transcript, re.I):
+            if re.search(r"\b(게임)\b", transcript, re.l):
+                os.system("sudo python3 dodge.py")
+            elif re.search(r"\b(종료|종료)\b", transcript, re.I):
                 sys.stdout.write(YELLOW)
                 sys.stdout.write("Exiting...\n")
                 stream.closed = True
