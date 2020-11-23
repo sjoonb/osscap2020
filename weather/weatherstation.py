@@ -1,6 +1,15 @@
+import pygame, pygcurse
+from pygame.locals import *
+
+#import LED_display as LD
+#import threading
+
 from urllib.request import urlopen, Request
 import urllib
 import bs4
+
+import pygame, pygcurse
+from pygame.locals import *
 
 from PIL import Image
 from PIL import ImageDraw
@@ -8,10 +17,19 @@ import schedule
 import time
 import requests
 
+import icons
+import copy
+
+#t=threading.Thread(target=LD.main, args=())
+#t.setDaemon(True)
+#t.start()
+
 #def drawimage(path, x, y):
 #    image = Image.open(open(path),'rb').convert('RGB')
 #    image.load()
 #    matrix.SetImage(image, x, y)
+
+win = pygcurse.PygcurseWindow(32, 16, fullscreen=False)
 
 def job():
     # Clear matrix
@@ -49,8 +67,18 @@ def job():
         TempComponents = str(temp)
         TempLength = len(TempComponents)
 
+        win.fill('@', fgcolor='black', bgcolor='black')
+
         temp=int(temp)
         print(weather)
+
+        if weather == '맑음':
+            print(icons.Sun)
+            pygcurseMatrix(icons.Sun)
+#            drawMatrix(icons.Sun)
+        elif weather == '흐림':
+            pass
+
         print(temp,"°C")
 
         # Sets Temperature Color
@@ -81,6 +109,29 @@ def job():
 
     except requests.exceptions.RequestException as e:
        drawimage('weathericons/' + 'error' + '.png', 9, 1)
+
+def pygcurseMatrix(screen):
+    for i in range(16):
+        for j in range(32):
+            if screen[i][j] == 1:
+                win.putchar('@', j, i, 'white')
+            elif screen[i][j] == 2:
+                win.putchar('@', j, i, 'green')
+    win.update()
+
+#def drawMatrix(array):
+#    for x in range(len(array[0])):
+#        for y in range(len(array)):
+#            if array[y][x] == 0:
+#                LD.set_pixel(x, y, 0)
+#            elif array[y][x] == 1:
+#                LD.set_pixel(x, y, 2)
+#            elif array[y][x] == 2:
+#                LD.set_pixel(x, y, 7)
+#            elif array[y][x] == 3:
+#                LD.set_pixel(x, y, 1)
+#            else:
+#                continue
 
 job()
 schedule.every(5).minutes.do(job)
