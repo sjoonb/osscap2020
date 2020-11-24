@@ -1,4 +1,4 @@
-# Pygcurse Dodger
+
 # By Al Sweigart al@inventwithpython.com
 
 # This program is a demo for the Pygcurse module.
@@ -8,10 +8,11 @@ import pygame, random, sys, time, pygcurse
 from pygame.locals import *
 
 import LED_display as TLD
+import HC_SR04 as RS
 import random
 import threading
 import keyboard
-import time
+#import time
 import os
 import copy
 
@@ -30,9 +31,18 @@ BADDIEMAXSIZE = 5
 BADDIEMINSPEED = 4
 BADDIEMAXSPEED = 1
 ADDNEWBADDIERATE = 50
+isfullscreen = False
+
+# Mode
+mode_list = ['mouse', 'keyboard', 'sensor']
+mode = mode_list[2]
+
+if mode == 'mouse':
+    isfullscreen = True
+
 
 # Make board
-win = pygcurse.PygcurseWindow(WINWIDTH, WINHEIGHT, fullscreen=False)
+win = pygcurse.PygcurseWindow(WINWIDTH, WINHEIGHT, fullscreen=isfullscreen)
 pygame.display.set_caption('Pygcurse Dodger')
 win.autoupdate = False
 
@@ -45,9 +55,6 @@ t.start()
 # Screen
 iScreen = [[0 for i in range(WINWIDTH)] for j in range(WINHEIGHT)]
 
-# Mode
-mode_list = ['mouse', 'keyboard', 'sensor']
-mode = mode_list[1]
 
 moveLeft = False
 moveRight = False
@@ -73,12 +80,19 @@ def main():
             pygame.mouse.set_pos(win.centerx * win.cellwidth, (win.bottom) * win.cellheight)
             mousex, mousey = pygame.mouse.get_pos()
             cellx, celly = WINWIDTH//2, WINHEIGHT-1
+            before_cellx_arr = [WINWIDTH//2] * 3
+            print(before_cellx_arr)
             baddies = []
             baddieAddCounter = 0
             gameOver = False
             score = 0
 
         win.fill(bgcolor=BLACK)
+
+        if mode == 'sensor':
+            if not gameOver:
+                cellx = RS.get_distance()-10
+
 
         for event in pygame.event.get():
             if event.type == QUIT or (event.type == KEYDOWN and event.key == K_ESCAPE):
@@ -113,7 +127,8 @@ def main():
                     if event.key == K_RIGHT or event.key == ord('d'):
                         counter = 0
                         moveRight = False 
-        
+
+                
 
         # add new baddies if needed
         # ADDNEWBADDIERATE determines amount of new baddies
@@ -147,7 +162,7 @@ def main():
         # check if hit
         if not gameOver:
             for baddie in baddies:
-                if cellx >= baddie['x'] and celly >= baddie['y'] and cellx < baddie['x']+baddie['size'] and celly < baddie['y']+baddie['size']:
+                if cellx >= baddie['x'] and WINHEIGHT-1 >= baddie['y'] and cellx < baddie['x']+baddie['size'] and WINHEIGHT-1 < baddie['y']+baddie['size']:
                     gameOver = True
                     gameOverTime = time.time()
                     break
@@ -163,16 +178,8 @@ def main():
             #for i in oScreen:
             #    print(i)
 
-        # draw character to screen
-        if not gameOver:
-            playercolor = WHITE
-            oScreen[celly][cellx] = 2
-        else:
-            playercolor = RED
-            oScreen[celly][cellx] = 3
-            win.putchars('GAME OVER', win.centerx-4, win.centery, fgcolor=RED, bgcolor=BLACK)
 
-        if mode == 'keyboard':
+        if mode == 'keyboard': 
             # todo - Boost
             if not gameOver:
                 if counter > 3:
@@ -183,10 +190,33 @@ def main():
 
                 if cellx < 0:
                     cellx = 0
-                elif cellx > WINWIDTH -1:
+                if cellx > WINWIDTH -1:
                     cellx = WINWIDTH-1
 
-        win.putchar('@', cellx, celly, playercolor)
+        elif mode == 'sensor':
+            if not gameOver:
+                if cellx < 0 or cellx > WINWIDTH -1:
+                    cellx = before_cellx_arr[-1]
+                if abs(cellx - before_cellx_arr[-1]) > 10:
+                    cellx = before_cellx_arr[-1] 
+                else:
+                    cellx = sum(before_cellx_arr[1:]+[cellx],1)//len(before_cellx_arr)
+                    before_cellx_arr.pop(0)
+                    before_cellx_arr.append(cellx)
+                    cellx = before_cellx_arr[-1]
+
+      
+        # draw character to screen
+        if not gameOver:
+            playercolor = WHITE
+            oScreen[WINHEIGHT-1][cellx] = 2
+        else:
+            playercolor = RED
+            oScreen[WINHEIGHT-1][cellx] = 3
+            win.putchars('GAME OVER', win.centerx-4, win.centery, fgcolor=RED, bgcolor=BLACK)
+  
+
+        win.putchar('@', cellx, WINHEIGHT-1, playercolor)
         win.putchars('Score: %s' % (score), win.width - 14, 1, fgcolor=WHITE)
         win.update()
         
