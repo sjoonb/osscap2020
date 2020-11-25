@@ -2,13 +2,12 @@ import pygame, pygcurse
 from pygame.locals import *
 
 import LED_display as LD
+import HC_SR04 as RS
 import threading
 import time
 import copy
 import os
 
-
-delay = 0.1
 
 t=threading.Thread(target=LD.main, args=())
 t.setDaemon(True)
@@ -20,7 +19,11 @@ FPS = 60
 
 
 mode_list = ['mouse', 'keyboard', 'sensor']
-mode = mode_list[1]
+mode = mode_list[2]
+isfullscreen = False
+
+if mode == 'mouse':
+    isfullscreen = True
 
 iScreen =[[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
           [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -42,7 +45,7 @@ iScreen =[[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
 
 # - Pygcurse board
 
-win = pygcurse.PygcurseWindow(32, 16, fullscreen=False)
+win = pygcurse.PygcurseWindow(32, 16, fullscreen=isfullscreen)
 
 def main():
     # os.system('cls' if os.name == 'nt' else 'clear')
@@ -54,6 +57,9 @@ def main():
         win.fill('@', fgcolor='black', bgcolor='black')
         
         if newGame:
+            pygame.mouse.set_pos(win.centerx * win.cellwidth, (win.bottom) * win.cellheight)
+            mousex, mousey = pygame.mouse.get_pos()
+            before_cellx_arr = [WINWIDTH//2] * 3
             cellx, celly = WINWIDTH//2, WINHEIGHT -2
             ballx, bally = cellx, WINHEIGHT - 3
             ball_direction = {'NW' : [-1, -1], 'N' : [0, -1], 'NE' : [1, -1], 'SW' : [-1, 1], 'S' : [0, 1], 'SE' : [1, 1]}
@@ -72,6 +78,9 @@ def main():
             gameOver = False
             newGame = False
 
+        if mode == 'sensor':
+            if not gameOver:
+                cellx = RS.get_distance()-10
 
         for event in pygame.event.get():
             if event.type == QUIT or (event.type == KEYDOWN and event.key == K_ESCAPE) or (event.type == KEYDOWN and event.key == ord('q')):
@@ -80,10 +89,11 @@ def main():
         # Input
 
             # mouse mode
-#            if mode == 'mouse':
-#                if event.type == MOUSEMOTION and not gameOver:
-#                    mousex, mousey = event.pos
-#                    cellx, celly = win.getcoordinatesatpixel(mousex, mousey)
+            if mode == 'mouse':
+                if event.type == MOUSEMOTION and not gameOver:
+                    mousex, mousey = event.pos
+                    cellx, celly = win.getcoordinatesatpixel(mousex, mousey)
+                    celly = WINHEIGHT - 2
 
             # keyboard mode
             elif mode == 'keyboard':
@@ -111,8 +121,19 @@ def main():
         # Act
         drawBricks(bricks, oScreen)
 
+        if mode == 'sensor':
+            if not gameOver:
+                if cellx < 1 or cellx > WINWIDTH -2:
+                    cellx = before_cellx_arr[-1]
+                if abs(cellx - before_cellx_arr[-1]) > 15:
+                    cellx = before_cellx_arr[-1] 
+                else:
+                    cellx = sum(before_cellx_arr[1:]+[cellx],1)//len(before_cellx_arr)
+                    before_cellx_arr.pop(0)
+                    before_cellx_arr.append(cellx)
+                    cellx = before_cellx_arr[-1]
 
-        if mode == 'keyboard': 
+        elif mode == 'keyboard': 
             if not gameOver:
                 if counter > 2:
                     if moveRight: cellx += 1
@@ -124,6 +145,12 @@ def main():
                     cellx = 2
                 if cellx > WINWIDTH-3:
                     cellx = WINWIDTH-3
+
+        elif mode == 'mouse':
+            if cellx < 2:
+                cellx = 2
+            if cellx > WINWIDTH-3:
+                cellx = WINWIDTH-3
 
     
 
