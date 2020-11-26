@@ -4,40 +4,22 @@ import os
 import alphabet
 import number
 
-def draw_matrix(m):
-    array = m.get_Array()
-    for y in range(m.get_dy()-4):
-        for x in range(4, m.get_dx()-4):
-            if array[y][x] == 0:
-                LMD.set_pixel(y, 19-x, 0)
-            elif array[y][x] == 1:
-                LMD.set_pixel(y, 19-x, 4)
-            else:
-                continue
-        print()
-
-def add_score_dodger(score):
+def add_score(game, score):
     while True:
         name = input("Enter your name : ")
-        if (name.isalpha() == True) and (name.isupper() == True) and (len(name) == 3):
+        if (name.isalpha() == True) and (len(name) == 3):
+            name = name.upper()
             break
         else:
             print("Wrong input!")
             continue
-    f = open("score_dodger.txt", 'a')
-    data = str(name) + ' ' + str(score) + '\n'
-    f.write(data)
-    f.close()
 
-def add_score_bb(score):
-    while True:
-        name = input("Enter your name : ")
-        if (name.isalpha() == True) and (name.isupper() == True) and (len(name) == 3):
-            break
-        else:
-            print("Wrong input!")
-            continue
-    f = open("score_bb.txt", 'a')
+    if game == "dodger":
+        f = open("score_dodger.txt", 'a')
+    elif game == "brick":
+        f = open("score_brick.txt", 'a')
+    else: print("Wrong!")
+
     data = str(name) + ' ' + str(score) + '\n'
     f.write(data)
     f.close()
