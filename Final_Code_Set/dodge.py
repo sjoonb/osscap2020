@@ -8,6 +8,7 @@ import pygame, random, sys, time, pygcurse
 from pygame.locals import *
 
 import LED_display as TLD
+import stt_thread as ST
 import HC_SR04 as RS
 import random
 import threading
@@ -35,7 +36,7 @@ isfullscreen = False
 
 # Mode
 mode_list = ['mouse', 'keyboard', 'sensor']
-mode = mode_list[2]
+mode = mode_list[1]
 
 if mode == 'mouse':
     isfullscreen = True
@@ -51,6 +52,10 @@ win.autoupdate = False
 t=threading.Thread(target=TLD.main, args=())
 t.setDaemon(True)
 t.start()
+
+t2=threading.Thread(target=ST.main, args=())
+t2.setDaemon(True)
+t2.start()
 
 # Screen
 iScreen = [[0 for i in range(WINWIDTH)] for j in range(WINHEIGHT)]

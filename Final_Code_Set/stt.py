@@ -31,6 +31,7 @@ Example usage:
 import re
 import sys
 import time
+import os
 
 from google.cloud import speech
 import pyaudio
@@ -45,6 +46,7 @@ RED = "\033[0;31m"
 GREEN = "\033[0;32m"
 YELLOW = "\033[0;33m"
 
+os.system('export GOOGLE_APPLICATION_CREDENTIALS="/home/pi/Downloads/test-fcb1f5e8c98c.json"')
 
 def get_current_time():
     """Return Current Time in MS."""
@@ -225,7 +227,10 @@ def listen_print_loop(responses, stream):
             # Exit recognition if any of the transcribed phrases could be
             # one of our keywords.
             if re.search(r"\b(game|Game)\b", transcript, re.I):
-                os.system("sudo python3 dodge.py")
+                #os.system("sudo python3 dodge.py")
+                sys.stdout.write("Exiting...\n")
+                stream.closed = True
+                return 'game'
             elif re.search(r"\b(exit|quit)\b", transcript, re.I):
                 sys.stdout.write(YELLOW)
                 sys.stdout.write("Exiting...\n")
@@ -281,7 +286,8 @@ def main():
             responses = client.streaming_recognize(streaming_config, requests)
 
             # Now, put the transcription responses to use.
-            listen_print_loop(responses, stream)
+            return_word = listen_print_loop(responses, stream)
+            print(return_word)
 
             if stream.result_end_time > 0:
                 stream.final_request_end_time = stream.is_final_end_time
@@ -294,6 +300,8 @@ def main():
             if not stream.last_transcript_was_final:
                 sys.stdout.write("\n")
             stream.new_stream = True
+    
+        return return_word
 
 
 if __name__ == "__main__":

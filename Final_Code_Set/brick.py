@@ -19,7 +19,7 @@ FPS = 60
 
 
 mode_list = ['mouse', 'keyboard', 'sensor']
-mode = mode_list[2]
+mode = mode_list[0]
 isfullscreen = False
 
 if mode == 'mouse':
