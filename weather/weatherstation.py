@@ -8,11 +8,6 @@ from urllib.request import urlopen, Request
 import urllib
 import bs4
 
-import pygame, pygcurse
-from pygame.locals import *
-
-from PIL import Image
-from PIL import ImageDraw
 import schedule
 import time
 import requests
@@ -24,18 +19,10 @@ import copy
 #t.setDaemon(True)
 #t.start()
 
-#def drawimage(path, x, y):
-#    image = Image.open(open(path),'rb').convert('RGB')
-#    image.load()
-#    matrix.SetImage(image, x, y)
-
 win = pygcurse.PygcurseWindow(32, 16, fullscreen=False)
 
-def job():
-    # Clear matrix
-    #matrix.Clear()
-
-    # Pull fresh weather data
+def weather():
+    #weather data
     try:
         url = 'https://search.naver.com/search.naver?ie=utf8&query='+ urllib.parse.quote('+날씨')
         
@@ -46,69 +33,64 @@ def job():
         location= soup.find('div', class_='select_box').find('span', class_='btn_select').text
 
         #Get Current Conditions
-        temp = soup.find('p', class_='info_temperature').find('span', class_='todaytemp').text
-        
-        weather = soup.find('ul', class_="info_list").find('p', class_="cast_txt").text
-        weather = weather.split(',')[0]
-
-#Draw weather icon
-#        if weather=='눈':
-#            drawimage('weathericons/' + 'snow' + '.png', 9, 1)
-#        elif weather=='비':
-#            drawimage('weathericons/' + '09d' + '.png', 9, 1)
-#        elif weather=='맑음':
-#            #drawimage('weathericons/' + '01d' + '.png', 9, 1)
-#        elif weather=='흐림':
-#            drawimage('weathericons/' + '03d' + '.png', 9, 1)
-#        elif weather=='구름많음':
-#            drawimage('weathericons/' + '02d' + '.png', 9, 1)
-
-        #Draw temperature
-        TempComponents = str(temp)
-        TempLength = len(TempComponents)
+        temp = int(soup.find('p', class_='info_temperature').find('span', class_='todaytemp').text)
+        weather = soup.find('ul', class_="info_list").find('p', class_="cast_txt").text.split(',')[0]
 
         win.fill('@', fgcolor='black', bgcolor='black')
 
-        temp=int(temp)
         print(weather)
+        print(temp,"℃")        
+        print(icons.Sun)
+        pygcurseMatrix(icons.Sun)
 
-        if weather == '맑음':
-            print(icons.Sun)
-            pygcurseMatrix(icons.Sun)
+#        if weather == '맑음':
+#            print(icons.Sun)
+#            pygcurseMatrix(icons.Sun)
 #            drawMatrix(icons.Sun)
-        elif weather == '흐림':
-            pass
+#        elif weather == '흐림':
+#            print(icons.Foggy)
+#            pygcurseMatrix(icons.Foggy)
+#            drawMatrix(icons.Foggy)
+#        elif weather == '구름 많음':
+#            print(icons.Cloudy)
+#            pygcurseMatrix(icons.Cloudy)
+#            drawMatrix(icons.Cloudy)
+#        elif weather == '비':
+#            print(icons.Rain)
+#            pygcurseMatrix(icons.Rain)
+#            drawMatrix(icons.Rain)
+#        elif weather == '눈':
+#            print("icons.Snow)
+#            pygcurseMatrix(icons.Snow)
+#            drawMatrix(icons.Snow)
 
-        print(temp,"°C")
 
         # Sets Temperature Color
 #        if temp <= 0:
-#            TempColor = 'b'
+#            TempColor = 'blue'
 #        elif temp > 32:
-#            TempColor = 'r'
+#            TempColor = 'red'
 #        else:
-#            TempColor = 'w'
+#            TempColor = 'white'
 #
-#        if TempLength == 1:
-#            drawimage('numbericons/' + str(TempComponents[0]) + TempColor + '.png', 11, 16)
-#            drawimage('numbericons/' + 'F' + TempColor + '.png', 17, 16)
+#        if temp<0:
+#            draw -
+#            draw 1
+#            draw c
 #
-#        if TempLength == 2:
-#            drawimage('numbericons/' + str(TempComponents[0]) + TempColor + '.png', 7, 16)
-#            drawimage('numbericons/' + str(TempComponents[1]) + TempColor + '.png', 13, 16)
+#        if 0<=temp<10:
+#            draw 1
+#            draw c
 #
-#            drawimage('numbericons/' + 'F' + TempColor + '.png', 19, 16)
-#
-#        if TempLength == 3:
-#            drawimage('numbericons/' + str(TempComponents[0]) + TempColor + '.png', 5, 16)
-#            drawimage('numbericons/' + str(TempComponents[1]) + TempColor + '.png', 9, 16)
-#            drawimage('numbericons/' + str(TempComponents[2]) + TempColor + '.png', 15, 16)
-#            drawimage('numbericons/' + 'F' + TempColor + '.png', 21, 16)
-#
-#        print('Current Temp: '+str(temp)+' Icon Code: '+str(icon))
+#        if 10<=temp:
+#            draw 1
+#            draw 2
+#            draw c
 
-    except requests.exceptions.RequestException as e:
-       drawimage('weathericons/' + 'error' + '.png', 9, 1)
+    except:
+        pass
+
+# 1 sun 
 
 def pygcurseMatrix(screen):
     for i in range(16):
@@ -133,9 +115,41 @@ def pygcurseMatrix(screen):
 #            else:
 #                continue
 
-job()
-schedule.every(5).minutes.do(job)
+def clock():
+    while True:
+        now=time.localtime()
+        #print('%02d:%02d:%02d'%(now.tm_hour,now.tm_min,now.tm_sec))
+        if (now.tm_hour<10):
+            #print 0
+            #print num
+            #   print(icons.Sun)
+            #   pygcurseMatrix(icons.Sun)
+            #   drawMatrix(icons.Sun)
+        elif (now.tm_hour>10):
+            #print num1
+            #print num2
+        
+        if (now.tm_min<10):
+            #print 0
+            #print num
+        elif (now.tm_min>10):
+            #print num1
+            #print num2
+        
+        if (now.tm_sec<10):
+            #print 0
+            #print num
+        elif (now.tm_sec>10):
+            #print num1
+            #print num2
+
+        time.sleep(1)
+
+weather()
+clock()
+schedule.every(10).minutes.do(weather)
+schedule.every(1).second.do(clock)
+
 
 while True:
     schedule.run_pending()
-    time.sleep(1)
