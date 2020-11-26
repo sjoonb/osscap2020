@@ -1,0 +1,1 @@
+중간에 라즈베리파이를 바꾸는 과정에서 user.name을 변경하지 않아 최근 몇개에 커밋의 user.name predis3299로 되어있음. game_source 코드는 모두 sjoonb에 의하여 작성됨.
