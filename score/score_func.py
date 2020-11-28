@@ -34,6 +34,8 @@ def get_index(game, score):
                 return i
         return 2
     elif game == "brick":
+        if int(score) == 0:
+            return 2
         for i in range(2):
             if int(score) < int(score_list[i][1]):
                 return i
