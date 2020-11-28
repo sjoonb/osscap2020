@@ -20,10 +20,11 @@ import copy
 #t.start()
 
 def numberIcon(num):
+    iconlist=[icons.num_0,icons.num_1,icons.num_2,icons.num_3,icons.num_4,icons.num_5,icons.num_6,icons.num_7,icons.num_8,icons.num_9]
     num=int(num)
-    for i in range(0,9):
+    for i in range(0,10):
         if num==i:
-            return icons.num_i
+            return iconlist[i]
         else:
             return 0
 
