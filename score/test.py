@@ -1,3 +1,4 @@
-a = 'KKjjllLL'
-a = a.upper()
-print(a)
+a = '000'
+b = '3'
+if int(a) < int(b):
+    print("DDD")
