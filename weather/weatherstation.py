@@ -1,6 +1,6 @@
 import pygame, pygcurse
 from pygame.locals import *
-
+#rom matrix import *
 #import LED_display as LD
 #import threading
 
@@ -19,6 +19,36 @@ import copy
 #t.setDaemon(True)
 #t.start()
 
+def numberIcon(num):
+    num=int(num)
+    for i in range(0,9):
+        if num==i:
+            return icons.num_i
+        else:
+            return 0
+
+iScreen = [[0 for x in range(32)] for y in range(16)]
+iScreenDy=16
+iScreenDx=32
+oScreen=copy.deepcopy(iScreen)
+
+def consoleMatrix(screen):
+    for i in screen:
+        print(i)
+
+def drawChar(char, screen, width, height, direction, color):
+    for i in range(width):
+        for j in range(height):
+            if char[j][i] == 1:
+                screen[direction[1]+j][direction[0]+i] = color
+
+
+# - Draw Matrix
+consoleMatrix(oScreen)
+#drawMatrix(oScreen)
+
+
+
 win = pygcurse.PygcurseWindow(32, 16, fullscreen=False)
 
 def weather():
@@ -33,15 +63,15 @@ def weather():
         location= soup.find('div', class_='select_box').find('span', class_='btn_select').text
 
         #Get Current Conditions
-        temp = int(soup.find('p', class_='info_temperature').find('span', class_='todaytemp').text)
+        temp = soup.find('p', class_='info_temperature').find('span', class_='todaytemp').text
         weather = soup.find('ul', class_="info_list").find('p', class_="cast_txt").text.split(',')[0]
 
         win.fill('@', fgcolor='black', bgcolor='black')
 
         print(weather)
         print(temp,"℃")        
-        print(icons.Sun)
-        pygcurseMatrix(icons.Sun)
+
+
 
 #        if weather == '맑음':
 #            print(icons.Sun)
@@ -66,31 +96,40 @@ def weather():
 
 
         # Sets Temperature Color
-#        if temp <= 0:
-#            TempColor = 'blue'
-#        elif temp > 32:
+#        if int(temp) <= 0:
+#            TempColor = 'blue' 
+#        elif int(temp) > 32:
 #            TempColor = 'red'
 #        else:
 #            TempColor = 'white'
-#
+
+#       # Set Temperatuer Position
+#        post1=(1,17)
+#        post2=(1,20)
+#        post3=(1,23)
+#        post4=(1,27)
+
+#       # Draw Temperature
+#        if temp<-10:
+#            drawChar(icons.Minus, oScreen,3,5,post1,TempColor)
+#            drawChar(numberIcon(temp[1]),oScreen,3,5,post2,TempColor)
+#            drawChar(numberIcon(temp[2]),oScreen,3,5,post3,TempColor)
+#            drawChar(icons.Cdegree,oScreen,4,5,post4,TempColor)
 #        if temp<0:
-#            draw -
-#            draw 1
-#            draw c
-#
+#            drawChar(icons.Minus, oScreen,3,5,post2,TempColor)
+#            drawChar(numberIcon(temp[1]),oScreen,3,5,post3,TempColor)
+#            drawChar(icons.Cdegree,oScreen,4,5,post4,TempColor)
 #        if 0<=temp<10:
-#            draw 1
-#            draw c
+#            drawChar(numberIcon(temp[0]),oScreen,3,5,post2,TempColor)
+#            drawChar(icons.Cdegree,oScreen,4,5,post3,TempColor)
 #
 #        if 10<=temp:
-#            draw 1
-#            draw 2
-#            draw c
+#            drawChar(numberIcon(temp[0]),oScreen,3,5,post2,TempColor)
+#            drawChar(numberIcon(temp[1]),oScreen,3,5,post3,TempColor)
+#            drawChar(icons.Cdegree,oScreen,4,5,post4,TempColor)
 
     except:
-        pass
-
-# 1 sun 
+        pass 
 
 def pygcurseMatrix(screen):
     for i in range(16):
@@ -102,47 +141,50 @@ def pygcurseMatrix(screen):
     win.update()
 
 #def drawMatrix(array):
+# color = 0 : 'None', 1 : 'Red', 2 : 'Green', 3 : 'Yellow', 4 : 'Blue', 5 : 'Purple', 6 : 'Crystal', 7 : 'White'
 #    for x in range(len(array[0])):
 #        for y in range(len(array)):
 #            if array[y][x] == 0:
 #                LD.set_pixel(x, y, 0)
 #            elif array[y][x] == 1:
-#                LD.set_pixel(x, y, 2)
+#                LD.set_pixel(x, y, 4)
 #            elif array[y][x] == 2:
-#                LD.set_pixel(x, y, 7)
+#                LD.set_pixel(x, y, 6)
 #            elif array[y][x] == 3:
-#                LD.set_pixel(x, y, 1)
+#                LD.set_pixel(x, y, 5)
+#            elif array[y][x] == 4:
+#                LD.set_pixel(x, y, 7)
 #            else:
 #                continue
 
 def clock():
     while True:
         now=time.localtime()
-        #print('%02d:%02d:%02d'%(now.tm_hour,now.tm_min,now.tm_sec))
-        if (now.tm_hour<10):
-            #print 0
-            #print num
-            #   print(icons.Sun)
-            #   pygcurseMatrix(icons.Sun)
-            #   drawMatrix(icons.Sun)
-        elif (now.tm_hour>10):
-            #print num1
-            #print num2
-        
-        if (now.tm_min<10):
-            #print 0
-            #print num
-        elif (now.tm_min>10):
-            #print num1
-            #print num2
-        
-        if (now.tm_sec<10):
-            #print 0
-            #print num
-        elif (now.tm_sec>10):
-            #print num1
-            #print num2
+        print('%02d:%02d:%02d'%(now.tm_hour,now.tm_min,now.tm_sec))
 
+        #Set Time number position
+#        post5=(9,17)
+#        post6=(9,20)
+#        post7=(9,24)
+#        post8=(9,27)
+
+        #hour=str(now.tm_hour)
+        #minute=str(now.tm_min)
+        #second=str(now.tm_sec)
+#        if (hour<10):
+            #drawChar(icons.num_0,oScreen,3,5,post5,white)
+            #drawChar(numberIcon(hour),oScreen,3,5,post6,white)
+#        elif (hour>10):
+            #drawChar(numberIcon(hour[0]),oScreen,3,5,post5,white)
+            #drawChar(numberIcon(hour[1]),oScreen,3,5,post6,white)
+        
+#        if (now.tm_min<10):
+            #drawChar(icons.num_0,oScreen,3,5,post7,white)
+            #drawChar(numberIcon(minute),oScreen,3,5,post8,white)
+#        elif (now.tm_min>10):
+            #drawChar(numberIcon(minute[0]),oScreen,3,5,post7,white)
+            #drawChar(numberIcon(minute[1]),oScreen,3,5,post8,white)
+        
         time.sleep(1)
 
 weather()
