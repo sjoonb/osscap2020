@@ -39,13 +39,17 @@ h_list = [7, 7, 7, 5, 5, 5, 7, 7, 7, 5, 5, 5]
 xy_list = [(1, 1), (7, 1), (13, 1), (20, 2), (24, 2), (28, 2), (1, 9), (7, 9), (13, 9), (20, 10), (24, 10), (28, 10)]
 color_list1 = [3, 3, 3, 3, 3, 3, 7, 7, 7, 7, 7, 7]
 color_list2 = [7, 7, 7, 7, 7, 7, 3, 3, 3, 3, 3, 3]
-game = "dodger"
-
 
 def main():
+    game_num = int(input("game : "))
+    if game_num == 1:
+        game = "dodger"
+    elif game_num == 2:
+        game = "brick"
     score = int(input("score : "))
-    add_score("dodger", score)
-    matrix_list = get_matrix_list("dodger")
+    index = get_index(game, score)
+    add_score(game, score)
+    matrix_list = get_matrix_list(game)
 
 
     os.system('cls' if os.name == 'nt' else 'clear')
@@ -56,13 +60,13 @@ def main():
         # fill matrix 
 
         # - Change oScreen matrix output in this area
-        if get_index(game, score) == 0:
+        if index == 0:
             for i in range(len(matrix_list)):
                 drawChar(matrix_list[i], oScreen, w_list[i], h_list[i], xy_list[i], color_list1[i])
-        elif get_index(game, score) == 1:
+        elif index == 1:
             for i in range(len(matrix_list)):
                 drawChar(matrix_list[i], oScreen, w_list[i], h_list[i], xy_list[i], color_list2[i])
-        elif get_index(game, score) == 2:
+        elif index == 2:
             for i in range(len(matrix_list)):
                 drawChar(matrix_list[i], oScreen, w_list[i], h_list[i], xy_list[i], 7)
 
@@ -128,6 +132,8 @@ def get_matrix_list(game):
             matrix_list.append(number.num_8)
         elif i == '9':
             matrix_list.append(number.num_9)
+        elif i == 's':
+            matrix_list.append(number.alpha_s)
         elif i == 'A':
             matrix_list.append(alphabet.alpha_a)
         elif i == 'B':

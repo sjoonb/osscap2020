@@ -1,8 +1,7 @@
 import os
 
 def add_score(game, score):
-    if score > 999:
-        score = 999
+    score = score_set(game, score)
     score_index = get_index(game, score)
 
     if score_index != 2:
@@ -18,6 +17,14 @@ def add_score(game, score):
         write_score(game, score, name, score_index)
     else:
         print("You didn't set a new record")
+
+def score_set(game, score):
+    new_score = score
+    if new_score > 999:
+        new_score = 999
+    if game == "brick" and new_score > 99:
+        new_score = 99
+    return new_score
 
 def print_score(game):
     score_list = get_score(game)
@@ -45,10 +52,14 @@ def write_score(game, score, name, index):
     score_list = get_score(game)
 
     score = str(score)
-    if len(score) == 1:
-        score = '0' + '0' + score
-    elif len(score) == 2:
-        score = '0' + score
+    if game == "dodger":
+        if len(score) == 1:
+            score = '0' + '0' + score
+        elif len(score) == 2:
+            score = '0' + score
+    elif game == "brick":
+        if len(score) == 1:
+            score = '0' + score
 
     if index == 0:
         score_list[1][0] = score_list[0][0]
@@ -79,7 +90,7 @@ def get_score(game):
         if os.path.isfile("score_dodger.txt") == False:
             f = open_file(game, 'w')
             f.close()
-    elif gamme == "brick":
+    elif game == "brick":
         if os.path.isfile("score_brick.txt") == False:
             f = open_file(game, 'w')
             f.close()
@@ -98,7 +109,7 @@ def get_score(game):
                 score_list.append(tmp)
                 continue
             elif game == "brick":
-                tmp = ["XXX", "999"]
+                tmp = ["XXX", "99"]
                 score_list.append(tmp)
                 continue
         tmp = line.split()
@@ -112,6 +123,9 @@ def get_alpha_num(game):
         for b in a:
             for c in b:
                 an_list.append(c)
+    if game == "brick":
+        an_list.insert(5, 's')
+        an_list.insert(11, 's')
     print(an_list)
     return an_list
 
@@ -123,4 +137,4 @@ def file_reset():
 #file_reset()
 #add_score("dodger", 30)
 #print_score("dodger")
-#get_alpha_num("dodger")
+#get_alpha_num("brick")
