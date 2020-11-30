@@ -98,15 +98,15 @@ def weather(oScreen):
 
     # Sets Temperature Color
     if int(temp) <= 0:
-        TempColor = 1 
+        TempColor = 4   #blue 
     elif int(temp) > 31:
-        TempColor = 2
+        TempColor = 1   #red
     else:
-        TempColor = 3
+        TempColor = 7   #white
 
    # Set Temperature Position
-    post1=(17,1)
-    post2=(20,1)
+    post1=(14,1)
+    post2=(18,1)
     post3=(23,1)
     post4=(27,1)
 
