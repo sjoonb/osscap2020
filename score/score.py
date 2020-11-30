@@ -37,9 +37,10 @@ iScreen =[[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
 w_list = [5, 5, 5, 3, 3, 3, 5, 5, 5, 3, 3, 3]
 h_list = [7, 7, 7, 5, 5, 5, 7, 7, 7, 5, 5, 5]
 xy_list = [(1, 1), (7, 1), (13, 1), (20, 2), (24, 2), (28, 2), (1, 9), (7, 9), (13, 9), (20, 10), (24, 10), (28, 10)]
-
+color_list1 = [3, 3, 3, 3, 3, 3, 7, 7, 7, 7, 7, 7]
+color_list2 = [7, 7, 7, 7, 7, 7, 3, 3, 3, 3, 3, 3]
 game = "dodger"
-score = 100
+
 
 def main():
     score = int(input("score : "))
@@ -55,9 +56,17 @@ def main():
         # fill matrix 
 
         # - Change oScreen matrix output in this area
+        if get_index(game, score) == 0:
+            for i in range(len(matrix_list)):
+                drawChar(matrix_list[i], oScreen, w_list[i], h_list[i], xy_list[i], color_list1[i])
+        elif get_index(game, score) == 1:
+            for i in range(len(matrix_list)):
+                drawChar(matrix_list[i], oScreen, w_list[i], h_list[i], xy_list[i], color_list2[i])
+        elif get_index(game, score) == 2:
+            for i in range(len(matrix_list)):
+                drawChar(matrix_list[i], oScreen, w_list[i], h_list[i], xy_list[i], 7)
 
-        for i in range(len(matrix_list)):
-            drawChar(matrix_list[i], oScreen, w_list[i], h_list[i], xy_list[i], 2)
+
         '''
         drawChar(char1, oScreen, 5, 7, (1,1), 2)
         drawChar(char2, oScreen, 5, 7, (7,1), 2)
