@@ -36,7 +36,7 @@ isfullscreen = False
 
 # Mode
 mode_list = ['mouse', 'keyboard', 'sensor']
-mode = mode_list[1]
+mode = mode_list[0]
 
 if mode == 'mouse':
     isfullscreen = True
@@ -44,8 +44,6 @@ if mode == 'mouse':
 
 # Make board
 win = pygcurse.PygcurseWindow(WINWIDTH, WINHEIGHT, fullscreen=isfullscreen)
-pygame.display.set_caption('Pygcurse Dodger')
-win.autoupdate = False
 
 # Modified to play in LED Matrix
 
@@ -66,16 +64,17 @@ def main():
     moveLeft = False
     moveRight = False
     counter = 0
-    showStartScreen()
-    pygame.mouse.set_visible(False)
+    # showStartScreen()
+    # pygame.mouse.set_visible(False)
     mainClock = pygame.time.Clock()
     gameOver = False
 
     newGame = True
+    highscore = 25
     while True:
         if gameOver and time.time() - 4 > gameOverTime:
-            newGame = True
-        
+            os.system("python3 argv.py {0} {1}".format('dodge', score))
+            break 
         # First setting
         if newGame:
             newGame = False
@@ -90,9 +89,6 @@ def main():
             gameOver = False
             score = 0
             score_count = 0
-
-        win.fill(bgcolor=BLACK)
-
 
 
         if mode == 'sensor':
@@ -172,7 +168,7 @@ def main():
                     gameOver = True
                     gameOverTime = time.time()
                     break
-            if score_count == 10:
+            if score_count == 3:
                 score += 1
                 score_count = 0
             else:
@@ -183,8 +179,8 @@ def main():
 
         # draw baddies to screen (Mouse Mode)
         for baddie in baddies:
-            win.fill('#', GREEN, BLACK, (baddie['x'], baddie['y'], baddie['size'], baddie['size']))
-            fillMatrix(baddie['x'], baddie['y'], baddie['size'], oScreen, WINWIDTH, WINHEIGHT)
+            #win.fill('#', GREEN, BLACK, (baddie['x'], baddie['y'], baddie['size'], baddie['size']))
+            fillMatrix(baddie['x'], baddie['y'], baddie['size'], oScreen, WINWIDTH, WINHEIGHT, score)
             #for i in oScreen:
             #    print(i)
 
@@ -225,15 +221,15 @@ def main():
             if cellx > 31:
                 cellx = 31
             oScreen[WINHEIGHT-1][cellx] = 3
-            win.putchars('GAME OVER', win.centerx-4, win.centery, fgcolor=RED, bgcolor=BLACK)
+            #win.putchars('GAME OVER', win.centerx-4, win.centery, fgcolor=RED, bgcolor=BLACK)
   
 
-        win.putchar('@', cellx, WINHEIGHT-1, playercolor)
-        win.putchars('Score: %s' % (score), win.width - 14, 1, fgcolor=WHITE)
-        win.update()
+        #win.putchar('@', cellx, WINHEIGHT-1, playercolor)
+        #win.putchars('Score: %s' % (score), win.width - 14, 1, fgcolor=WHITE)
+        #win.update()
         
 
-        drawMatrix(oScreen)
+        drawMatrix(oScreen, score, highscore)
         mainClock.tick(FPS)
 
 
@@ -259,7 +255,7 @@ def checkForKeyPress():
 
 # Game display
 
-def fillMatrix(bx, by, size, screen, w, h):
+def fillMatrix(bx, by, size, screen, w, h, score):
     for i in range(by, by+size):
         for j in range(bx, bx+size):
             if i < 0 or i >= h or j < 0 or j >= w:
@@ -267,23 +263,36 @@ def fillMatrix(bx, by, size, screen, w, h):
             #print(i, j)
             screen[i][j] = 1  
 
-def fillCharacter(cx, cy, screen): 
-    if i < 0 or i >= h or j < 0 or j >= w:
-        return
-
-def drawMatrix(array):
+def drawMatrix(array, score, highscore):
     for x in range(len(array[0])):
         for y in range(len(array)):
             if array[y][x] == 0:
                 TLD.set_pixel(x, y, 0)
             elif array[y][x] == 1:
-                TLD.set_pixel(x, y, 2)
+                if score > highscore and score < highscore + 30:
+                    color = random.randint(1,6)
+
+                else:
+                    if score <= 10:
+                        color = 2
+                    elif score <= 20 :
+                        color = 3
+                    elif score <= 30 :
+                        color = 4
+                    elif score <= 40 :
+                        color = 5
+                    else:
+                        color = 6
+
+                TLD.set_pixel(x, y, color) #2,3,4,5,6
             elif array[y][x] == 2:
                 TLD.set_pixel(x, y, 7)
             elif array[y][x] == 3:
                 TLD.set_pixel(x, y, 1)
             else:
                 continue
+            
+            # color = 0 : 'None', 1 : 'Red', 2 : 'Green', 3 : 'Yellow', 4 : 'Blue', 5 : 'Purple', 6 : 'Crystal', 7 : 'White'
 
 # Game mode
 
