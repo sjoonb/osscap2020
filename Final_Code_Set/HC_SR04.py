@@ -30,7 +30,7 @@ def get_distance():
         distance = pulse_duration * 17000 * 2
         distance = round(distance)
 
-        print("Distance : ", distance, 'px')
+#        print("Distance : ", distance, 'px')
 
         return distance
 

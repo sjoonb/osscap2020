@@ -39,7 +39,7 @@ from six.moves import queue
 
 # Audio recording parameters
 STREAMING_LIMIT = 240000  # 4 minutes
-SAMPLE_RATE = 16000
+SAMPLE_RATE = 44100
 CHUNK_SIZE = int(SAMPLE_RATE / 10)  # 100ms
 
 RED = "\033[0;31m"
@@ -47,7 +47,7 @@ GREEN = "\033[0;32m"
 YELLOW = "\033[0;33m"
 
 os.system('export GOOGLE_APPLICATION_CREDENTIALS="/home/pi/Downloads/test-fcb1f5e8c98c.json"')
-
+#print('export GOOGLE_APPLICATION_CREDENTIALS="/home/pi/Downloads/test-fcb1f5e8c98c.json"')
 def get_current_time():
     """Return Current Time in MS."""
 
@@ -226,11 +226,18 @@ def listen_print_loop(responses, stream):
 
             # Exit recognition if any of the transcribed phrases could be
             # one of our keywords.
-            if re.search(r"\b(game|Game)\b", transcript, re.I):
-                #os.system("sudo python3 dodge.py")
-                sys.stdout.write("Exiting...\n")
+            if re.search(r"\b(게임)\b", transcript, re.I):
                 stream.closed = True
-                return 'game'
+                return '게임'
+            if re.search(r"\b(날씨)\b", transcript, re.I):
+                stream.closed = True
+                return '날씨'
+            if re.search(r"\b(벽돌)\b", transcript, re.I):
+                stream.closed = True
+                return '벽돌'
+            if re.search(r"\b(피하기)\b", transcript, re.I):
+                stream.closed = True
+                return '피하기'
             elif re.search(r"\b(exit|quit)\b", transcript, re.I):
                 sys.stdout.write(YELLOW)
                 sys.stdout.write("Exiting...\n")
@@ -252,7 +259,7 @@ def main():
     config = speech.RecognitionConfig(
         encoding=speech.RecognitionConfig.AudioEncoding.LINEAR16,
         sample_rate_hertz=SAMPLE_RATE,
-        language_code="en-US",
+        language_code="ko-KR", #en-US
         max_alternatives=1,
     )
 
