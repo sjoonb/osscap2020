@@ -1,7 +1,5 @@
-#import pygame, pygcurse
-#from pygame.locals import *
 from matrix import *
-#import LED_display as LD
+import LED_display as LD
 import threading
 
 from urllib.request import urlopen, Request
@@ -14,9 +12,9 @@ import copy
 
 import icons
 
-#t=threading.Thread(target=LD.main, args=())
-#t.setDaemon(True)
-#t.start()
+t=threading.Thread(target=LD.main, args=())
+t.setDaemon(True)
+t.start()
 
 
 def numberIcon(num):
@@ -30,6 +28,8 @@ def numberIcon(num):
 def drawChar(char, screen, width, height, direction, color):
     for i in range(width):
         for j in range(height):
+            if char[j][i] == 0:
+                screen[direction[1]+j][direction[0]+i] = 0
             if char[j][i] == 1:
                 screen[direction[1]+j][direction[0]+i] = 3
             if char[j][i] == 2:
@@ -43,18 +43,7 @@ def drawMatrix(array):
     # color = 0 : 'None', 1 : 'Red', 2 : 'Green', 3 : 'Yellow', 4 : 'Blue', 5 : 'Purple', 6 : 'Crystal', 7 : 'White'
     for x in range(len(array[0])):
         for y in range(len(array)):
-            if array[y][x] == 0:
-                LD.set_pixel(x, y, 0)
-            elif array[y][x] == 1:
-                LD.set_pixel(x, y, 4)
-            elif array[y][x] == 2:
-                LD.set_pixel(x, y, 6)
-            elif array[y][x] == 3:
-                LD.set_pixel(x, y, 5)
-            elif array[y][x] == 4:
-                LD.set_pixel(x, y, 7)
-            else:
-                continue
+            LD.set_pixel(x, y, array[y][x])
 
 def consoleMatrix(screen):
         for i in screen:
@@ -65,11 +54,11 @@ oScreen=copy.deepcopy(iScreen)
 
 #win = pygcurse.PygcurseWindow(32, 16, fullscreen=False)
 
-def weather():
+def weather(oScreen):
 
     #weather data
     url = 'https://search.naver.com/search.naver?ie=utf8&query='+ urllib.parse.quote('+날씨')
-    
+
     req = Request(url)
     page = urlopen(req)
     html = page.read()
@@ -141,6 +130,9 @@ def weather():
         drawChar(icons.Cdegree,oScreen,4,5,post4,TempColor)
 #        drawMatrix(oScreen)
 
+
+    return oScreen
+
 #def pygcurseMatrix(screen):
 #    for i in range(16):
 #        for j in range(32):
@@ -150,7 +142,7 @@ def weather():
 #                win.putchar('@', j, i, 'green')
 #    win.update()
         
-def clock():
+def clock(oScreen):
     now=time.localtime()
     #print('%02d:%02d:%02d'%(now.tm_hour,now.tm_min,now.tm_sec))
 
@@ -176,14 +168,15 @@ def clock():
     elif (int(minute)>10):
         drawChar(numberIcon(minute[0]),oScreen,3,5,post7,white)
         drawChar(numberIcon(minute[1]),oScreen,3,5,post8,white)
-    consoleMatrix(oScreen)   
-    time.sleep(1)
+    #consoleMatrix(oScreen)   
+    drawMatrix(oScreen)
 
-weather()
-clock()
-schedule.every(10).minutes.do(weather)
-schedule.every(1).minutes.do(clock)
-
-
+count = 0
 while True:
-    schedule.run_pending()
+    print(count)
+    if count % 600 == 0:
+        oScreen=copy.deepcopy(iScreen)
+        oScreen = weather(oScreen)
+    clock(oScreen)
+    time.sleep(1)
+    count += 1
