@@ -1,5 +1,5 @@
-# import LED_display as LD
-# import threading
+import LED_display as LD
+import threading
 
 import time
 import copy
@@ -11,9 +11,9 @@ from score_func import *
 
 delay = 0.1
 
-#t=threading.Thread(target=LD.main, args=())
-#t.setDaemon(True)
-#t.start()
+t=threading.Thread(target=LD.main, args=())
+t.setDaemon(True)
+t.start()
 
 #drawChar(alphabet.alpha_a, oScreen, 5, 7, (1, 1), 1)
 
@@ -88,7 +88,7 @@ def main():
 
         # - Draw Matrix
         consoleMatrix(oScreen)
-#        drawMatrix(oScreen)
+        drawMatrix(oScreen)
 
 
         time.sleep(delay)
@@ -200,19 +200,10 @@ def drawBricks(bricks, screen):
                 else:
                     screen[j][i] = 3
 
-#def drawMatrix(array):
-#    for x in range(len(array[0])):
-#        for y in range(len(array)):
-#            if array[y][x] == 0:
-#                LD.set_pixel(x, y, 0)
-#            elif array[y][x] == 1:
-#                LD.set_pixel(x, y, 2)
-#            elif array[y][x] == 2:
-#                LD.set_pixel(x, y, 7)
-#            elif array[y][x] == 3:
-#                LD.set_pixel(x, y, 1)
-#            else:
-#                continue
+def drawMatrix(array):
+    for x in range(len(array[0])):
+        for y in range(len(array)):
+             LD.set_pixel(x, y, array[y][x])
             
             # color = 0 : 'None', 1 : 'Red', 2 : 'Green', 3 : 'Yellow', 4 : 'Blue', 5 : 'Purple', 6 : 'Crystal', 7 : 'White'
 
