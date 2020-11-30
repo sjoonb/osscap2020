@@ -15,11 +15,11 @@ t.start()
 
 WINWIDTH = 32
 WINHEIGHT = 16
-FPS = 60
+delay = 0.03
 
 
 mode_list = ['mouse', 'keyboard', 'sensor']
-mode = mode_list[0]
+mode = mode_list[1]
 isfullscreen = False
 
 if mode == 'mouse':
@@ -49,12 +49,23 @@ win = pygcurse.PygcurseWindow(32, 16, fullscreen=isfullscreen)
 
 def main():
     # os.system('cls' if os.name == 'nt' else 'clear')
-    mainClock = pygame.time.Clock()
     newGame = True
+    gameOver = False
+    gameWin = 0
+    start_time = time.time()
+
     while True:
+        if gameOver:
+            time.sleep(1)
+            os.system("python3 argv.py {0} {1}".format('brick', -1))
+            break  
+        elif gameWin == 2:
+            time_score = round(time.time() - start_time)
+            time.sleep(1)
+            os.system("python3 argv.py {0} {1}".format('brick', time_score))
+            break  
         
         oScreen = copy.deepcopy(iScreen) 
-        win.fill('@', fgcolor='black', bgcolor='black')
         
         if newGame:
             pygame.mouse.set_pos(win.centerx * win.cellwidth, (win.bottom) * win.cellheight)
@@ -69,7 +80,7 @@ def main():
             ballcnt = 0
             ballmv = ball_direction['N']
             
-            bricks = [[1,1], [6,1], [11,1], [16,1], [21, 1], [26,1], [3,4], [8,4], [13,4], [18,4], [23,4]]
+            bricks =[[1,1]]#[1,1], [6,1], [11,1], [16,1], [21, 1], [26,1], [3,4], [8,4], [13,4], [18,4], [23,4]]
 
             if mode == 'keyboard':
                 counter = 0
@@ -125,7 +136,7 @@ def main():
             if not gameOver:
                 if cellx < 1 or cellx > WINWIDTH -2:
                     cellx = before_cellx_arr[-1]
-                if abs(cellx - before_cellx_arr[-1]) > 15:
+                if abs(cellx - before_cellx_arr[-1]) > 10:
                     cellx = before_cellx_arr[-1] 
                 else:
                     cellx = sum(before_cellx_arr[1:]+[cellx],1)//len(before_cellx_arr)
@@ -155,7 +166,6 @@ def main():
     
 
         # Ball check
-
         hit = oScreen[bally][ballx]
         if ballcnt == 0:
             # Hit wall
@@ -164,26 +174,25 @@ def main():
                     ballmv = [ballmv[0], -ballmv[1]]
                 if ballx <= 0 or ballx >= WINWIDTH - 1:
                     ballmv = [-ballmv[0], ballmv[1]]
-                if ballx <= 0:
+                if bally >= WINHEIGHT - 1:
+                    gameOver = True
+                    ballmv = [-ballmv[0], -ballmv[1]]
                     # GameOver
-                    pass
 
             # Hit brick
-            elif hit == 3 or hit == 4:
-                print('Hit!')
+            elif hit == 3:
                 bricks = breakBrick(ballx, bally, oScreen, bricks)
                 
-                if hit == 3 or 4:
-                    for key, value in ball_direction.items():
-                        if ballmv == value:
-                            direction = key
-                    
-                    if direction[0] == 'N':
-                        direction = 'S' + direction[1:] 
-                    elif direction[0] == 'S':
-                        direction = 'N' + direction[1:]
+                for key, value in ball_direction.items():
+                    if ballmv == value:
+                        direction = key
+                
+                if direction[0] == 'N':
+                    direction = 'S' + direction[1:] 
+                elif direction[0] == 'S':
+                    direction = 'N' + direction[1:]
 
-                    ballmv = ball_direction[direction]
+                ballmv = ball_direction[direction]
 
 
 
@@ -196,7 +205,11 @@ def main():
                 else:
                     ballmv = ball_direction['N']
 
-        oScreen[bally][ballx] = 2
+        # Draw ball
+        if not gameOver:
+            oScreen[bally][ballx] = 2
+        else:
+            oScreen[bally][ballx] = 4
 
         # Ball movement
         if ballcnt >= ballspeed:
@@ -205,6 +218,7 @@ def main():
             ballcnt = 0
         else:
             ballcnt += 1
+
 
         # fill matrix 
 
@@ -224,10 +238,11 @@ def main():
         #pygcurseMatrix(oScreen)
         drawMatrix(oScreen)
 
-        win.update()
+        if len(bricks) == 0:
+            gameWin += 1
 
-       # time.sleep(delay)
-        mainClock.tick(FPS)
+
+        time.sleep(delay)
 
         # os.system('cls' if os.name == 'nt' else 'clear')
 
@@ -242,38 +257,13 @@ def breakBrick(x, y, screen, bricks):
 
 def drawBricks(bricks, screen):
     for brick in bricks:
-        cnt = 0
         for i in range(brick[0], brick[0]+4):
-            cnt += 1
             for j in range(brick[1], brick[1]+2):
-                if cnt == 1 or cnt == 4:
-                    screen[j][i] = 4
-                else:
                     screen[j][i] = 3
-
-def ballCheck(x, y, screen, width, height):
-
-    return ballmv
 
 def drawPad(x, y, screen):
     for i in range(x-2,x+3,1):
         screen[y][i] = 1
-    
-
-def consoleMatrix(screen):
-    for i in screen:
-        print(i)
-
-def pygcurseMatrix(screen):
-    for i in range(16):
-        for j in range(32):
-            if screen[i][j] == 1:
-                win.putchar('@', j, i, 'white')
-            elif screen[i][j] == 2:
-                win.putchar('@', j, i, 'blue')
-            elif screen[i][j] == 3:
-                win.putchar('@', j, i, 'green')
-            #default color = 'white', 'yellow' ,'fuchsia' ,'red', 'silver', 'gray', 'olive', 'purple', 'maroon', 'aqua', 'lime', 'teal', 'green', 'blue', 'navy', 'black'
     
 
 def drawMatrix(array):
@@ -286,9 +276,9 @@ def drawMatrix(array):
             elif array[y][x] == 2:
                 LD.set_pixel(x, y, 6)
             elif array[y][x] == 3:
-                LD.set_pixel(x, y, 1)
-            elif array[y][x] == 4:
                 LD.set_pixel(x, y, 2)
+            elif array[y][x] == 4:
+                LD.set_pixel(x, y, 1)
             else:
                 continue
             
