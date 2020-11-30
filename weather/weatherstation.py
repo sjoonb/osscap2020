@@ -73,30 +73,32 @@ def weather():
 
         temp = soup.find('p', class_='info_temperature').find('span', class_='todaytemp').text
         weather = soup.find('ul', class_="info_list").find('p', class_="cast_txt").text.split(',')[0]
-
+#        location= soup.find('div', class_='select_box').find('span', class_='btn_select').text
+#        print(location)
 #        win.fill('@', fgcolor='black', bgcolor='black')
 
         #draw weather icon
         if weather == '맑음':
 #            print(icons.Sun)
 #            pygcurseMatrix(icons.Sun)
-            drawMatrix(icons.Sun)
+#            drawMatrix(icons.Sun)
+            drawChar(icons.Sun, oScreen, 16,8 ,(0,0),
         elif weather == '흐림':
 #            print(icons.Fog)
 #            pygcurseMatrix(icons.Fog)
-            drawMatrix(icons.Fog)
+#            drawMatrix(icons.Fog)
         elif weather == '구름 많음':
 #            print(icons.Cloud)
 #            pygcurseMatrix(icons.Cloud)
-            drawMatrix(icons.Cloud)
+#            drawMatrix(icons.Cloud)
         elif weather == '비':
 #            print(icons.Rain)
 #            pygcurseMatrix(icons.Rain)
-            drawMatrix(icons.Rain)
+#            drawMatrix(icons.Rain)
         elif weather == '눈':
 #            print("icons.Snow)
 #            pygcurseMatrix(icons.Snow)
-            drawMatrix(icons.Snow)
+#            drawMatrix(icons.Snow)
 
 
         # Sets Temperature Color
