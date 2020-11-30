@@ -31,13 +31,13 @@ def drawChar(char, screen, width, height, direction, color):
     for i in range(width):
         for j in range(height):
             if char[j][i] == 1:
-                screen[direction[1]+j][direction[0]+i] = 1
-            if char[j][i] == 2:
-                screen[direction[1]+j][direction[0]+i] = 2
-            if char[j][i] == 3:
                 screen[direction[1]+j][direction[0]+i] = 3
-            if char[j][i] == 4:
+            if char[j][i] == 2:
+                screen[direction[1]+j][direction[0]+i] = 6
+            if char[j][i] == 3:
                 screen[direction[1]+j][direction[0]+i] = 4
+            if char[j][i] == 4:
+                screen[direction[1]+j][direction[0]+i] = 7
 
 def drawMatrix(array):
     # color = 0 : 'None', 1 : 'Red', 2 : 'Green', 3 : 'Yellow', 4 : 'Blue', 5 : 'Purple', 6 : 'Crystal', 7 : 'White'
@@ -60,12 +60,8 @@ def consoleMatrix(screen):
         for i in screen:
                     print(i)
 
-#Draw Matrix
 iScreen = [[0 for x in range(32)] for y in range(16)]
 oScreen=copy.deepcopy(iScreen)
-#drawMatrix(oScreen)
-
-consoleMatrix(oScreen)
 
 #win = pygcurse.PygcurseWindow(32, 16, fullscreen=False)
 
@@ -144,7 +140,6 @@ def weather():
         drawChar(numberIcon(temp[1]),oScreen,3,5,post3,TempColor)
         drawChar(icons.Cdegree,oScreen,4,5,post4,TempColor)
 #        drawMatrix(oScreen)
-    consoleMatrix(oScreen)
 
 #def pygcurseMatrix(screen):
 #    for i in range(16):
@@ -160,10 +155,10 @@ def clock():
     #print('%02d:%02d:%02d'%(now.tm_hour,now.tm_min,now.tm_sec))
 
     #Set Time number position
-    post5=(17,9)
-    post6=(20,9)
+    post5=(14,9)
+    post6=(18,9)
     post7=(24,9)
-    post8=(27,9)
+    post8=(28,9)
     white=7
     hour=str(now.tm_hour)
     minute=str(now.tm_min)
@@ -174,7 +169,7 @@ def clock():
     elif (int(hour)>10):
         drawChar(numberIcon(hour[0]),oScreen,3,5,post5,white)
         drawChar(numberIcon(hour[1]),oScreen,3,5,post6,white)
-    drawChar(icons.Dot,oScreen,1,5,(23,9),white)
+    drawChar(icons.Dot,oScreen,3,5,(21,9),white)
     if (int(minute)<10):
         drawChar(icons.num_0,oScreen,3,5,post7,white)
         drawChar(numberIcon(minute),oScreen,3,5,post8,white)
