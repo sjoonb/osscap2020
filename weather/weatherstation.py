@@ -1,7 +1,7 @@
 #import pygame, pygcurse
 #from pygame.locals import *
 from matrix import *
-import LED_display as LD
+#import LED_display as LD
 import threading
 
 from urllib.request import urlopen, Request
@@ -14,9 +14,9 @@ import copy
 
 import icons
 
-t=threading.Thread(target=LD.main, args=())
-t.setDaemon(True)
-t.start()
+#t=threading.Thread(target=LD.main, args=())
+#t.setDaemon(True)
+#t.start()
 
 def numberIcon(num):
     iconlist=[icons.num_0,icons.num_1,icons.num_2,icons.num_3,icons.num_4,icons.num_5,icons.num_6,icons.num_7,icons.num_8,icons.num_9,icons.X]
@@ -53,10 +53,17 @@ def drawMatrix(array):
                 LD.set_pixel(x, y, 7)
             else:
                 continue
+
+def consoleMatrix(screen):
+        for i in screen:
+                    print(i)
+
 #Draw Matrix
 iScreen = [[0 for x in range(32)] for y in range(16)]
 oScreen=copy.deepcopy(iScreen)
-drawMatrix(oScreen)
+#drawMatrix(oScreen)
+
+consoleMatrix(oScreen)
 
 #win = pygcurse.PygcurseWindow(32, 16, fullscreen=False)
 
@@ -82,28 +89,32 @@ def weather():
 #            print(icons.Sun)
 #            pygcurseMatrix(icons.Sun)
 #            drawMatrix(icons.Sun)
-            oScreen+=icons.Sun
+#            oScreenicons.Sun
+           pass 
         elif weather == '흐림':
 #            print(icons.Fog)
 #            pygcurseMatrix(icons.Fog)
 #            drawMatrix(icons.Fog)
-            oScreen+=icons.Fog
+#            oScreen+=icons.Fog
+            drawChar(icon.Fog,oScreen,16,32,(0,0),2)
         elif weather == '구름 많음':
 #            print(icons.Cloud)
 #            pygcurseMatrix(icons.Cloud)
 #            drawMatrix(icons.Cloud)
-            oScreen+=icons.Cloud
+#            oScreen+=icons.Cloud
+            pass
         elif weather == '비':
 #            print(icons.Rain)
 #            pygcurseMatrix(icons.Rain)
 #            drawMatrix(icons.Rain)
-            oScreen+=icons.Rain
+#            oScreen+=icons.Rain
+            pass
         elif weather == '눈':
 #            print("icons.Snow)
 #            pygcurseMatrix(icons.Snow)
 #            drawMatrix(icons.Snow)
-            oScreen+=icons.Snow
-
+#            oScreen+=icons.Snow
+            pass
         # Sets Temperature Color
         if int(temp) <= 0:
             TempColor = blue 
@@ -136,7 +147,8 @@ def weather():
             drawChar(numberIcon(temp[0]),oScreen,3,5,post2,TempColor)
             drawChar(numberIcon(temp[1]),oScreen,3,5,post3,TempColor)
             drawChar(icons.Cdegree,oScreen,4,5,post4,TempColor)
-        drawMatrix(oScreen)
+#        drawMatrix(oScreen)
+        consoleMatrix(oScreen)
         time.sleep(1) 
 
 #def pygcurseMatrix(screen):
@@ -147,7 +159,7 @@ def weather():
 #            elif screen[i][j] == 2:
 #                win.putchar('@', j, i, 'green')
 #    win.update()
-
+        
 def clock():
     while True:
         now=time.localtime()
