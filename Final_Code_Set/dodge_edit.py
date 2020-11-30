@@ -313,14 +313,14 @@ def drawChar(char, screen, width, height, direction, color):
                 screen[direction[1]+j][direction[0]+i] = color
 
 def print_GameOver(oScreen):
-    drawChar(alphabet.alpha_g, oScreen, 5, 7, (1,1), 2)
-    drawChar(s_alphabet.alpha_a, oScreen, 5, 7, (7,1), 2)
-    drawChar(s_alphabet.alpha_m, oScreen, 5, 7, (13,1), 2)
-    drawChar(s_alphabet.alpha_e, oScreen, 5, 7, (19,1), 2)
-    drawChar(alphabet.alpha_o, oScreen, 5, 7, (26, 9), 2)
-    drawChar(s_alphabet.alpha_v, oScreen, 5, 7, (20, 9), 2)
-    drawChar(s_alphabet.alpha_e, oScreen, 5, 7, (14, 9), 2)
-    drawChar(s_alphabet.alpha_r, oScreen, 5, 7, (8, 9), 2)
+    drawChar(alphabet.alpha_g, oScreen, 5, 7, (1,1), 3)
+    drawChar(s_alphabet.alpha_a, oScreen, 5, 7, (7,1), 3)
+    drawChar(s_alphabet.alpha_m, oScreen, 5, 7, (13,1), 3)
+    drawChar(s_alphabet.alpha_e, oScreen, 5, 7, (19,1), 3)
+    drawChar(alphabet.alpha_o, oScreen, 5, 7, (8, 9), 3)
+    drawChar(s_alphabet.alpha_v, oScreen, 5, 7, (14, 9), 3)
+    drawChar(s_alphabet.alpha_e, oScreen, 5, 7, (20, 9), 3)
+    drawChar(s_alphabet.alpha_r, oScreen, 5, 7, (26, 9), 3)
 
     
 
