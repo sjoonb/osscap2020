@@ -75,6 +75,10 @@ def main():
     highscore = 25
     while True:
         if gameOver and time.time() - 4 > gameOverTime:
+            oScreen = copy.deepcopy(iScreen)
+            print_GameOver(oScreen)
+            drawMatrix(oScreen, score, highscore)
+            time.sleep(10)
             os.system("python3 argv.py {0} {1}".format('dodge', score))
             break 
         # First setting
