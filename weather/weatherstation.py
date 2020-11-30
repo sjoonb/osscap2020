@@ -56,12 +56,12 @@ def drawMatrix(array):
 #Draw Matrix
 iScreen = [[0 for x in range(32)] for y in range(16)]
 oScreen=copy.deepcopy(iScreen)
-#drawMatrix(oScreen)
+drawMatrix(oScreen)
 
 #win = pygcurse.PygcurseWindow(32, 16, fullscreen=False)
 
 def weather():
-    try:
+    while True:
         #weather data
         url = 'https://search.naver.com/search.naver?ie=utf8&query='+ urllib.parse.quote('+날씨')
         
@@ -136,9 +136,8 @@ def weather():
             drawChar(numberIcon(temp[0]),oScreen,3,5,post2,TempColor)
             drawChar(numberIcon(temp[1]),oScreen,3,5,post3,TempColor)
             drawChar(icons.Cdegree,oScreen,4,5,post4,TempColor)
-
-    except:
-        pass 
+        drawMatrix(oScreen)
+        time.sleep(1) 
 
 #def pygcurseMatrix(screen):
 #    for i in range(16):
@@ -169,14 +168,14 @@ def clock():
         elif (int(hour)>10):
             drawChar(numberIcon(hour[0]),oScreen,3,5,post5,white)
             drawChar(numberIcon(hour[1]),oScreen,3,5,post6,white)
-        drawChar(icons.Dot,oScreen,1,5,(23,9),white).
+        drawChar(icons.Dot,oScreen,1,5,(23,9),white)
         if (int(minute)<10):
             drawChar(icons.num_0,oScreen,3,5,post7,white)
             drawChar(numberIcon(minute),oScreen,3,5,post8,white)
         elif (int(minute)>10):
             drawChar(numberIcon(minute[0]),oScreen,3,5,post7,white)
             drawChar(numberIcon(minute[1]),oScreen,3,5,post8,white)
-       
+        drawMatrix(oScreen)   
         time.sleep(1)
 
 weather()
