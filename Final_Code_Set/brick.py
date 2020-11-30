@@ -48,7 +48,6 @@ iScreen =[[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
 win = pygcurse.PygcurseWindow(32, 16, fullscreen=isfullscreen)
 
 def main():
-    # os.system('cls' if os.name == 'nt' else 'clear')
     newGame = True
     gameOver = False
     gameWin = 0
