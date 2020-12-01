@@ -4,16 +4,21 @@ import score_func
 
 def play_tts(string):
     tts = gTTS(text = string, lang = 'ko')
-    tts.save("test.mp3")
-    os.system("omxplayer test.mp3")
+    if os.path.isfile("ttsplay.mp3") == True:
+        os.remove("ttsplay.mp3")
+    tts.save("ttsplay.mp3")
+    os.system("omxplayer ttsplay.mp3")
 
 def tts_score(score):
     score_str = "현재 점수는" + str(score) + "점 입니다" 
     play_tts(score_str)
 
-def tts_high_score():
-    score=score_func.get_score('dodger')[0][1]
-    #임의로 dodger 점수를 읽어오는 중. 수정 필요
+def tts_high_score(g):
+    if g == "d":
+        game = "dodger"
+    elif g == "b":
+        game = "brick"
+    score = score_func.get_score(game)[0][1]
     score_str = "최고 기록은 " + str(score) + "점 입니다"
     play_tts(score_str)
 
