@@ -9,8 +9,6 @@ import sys
 import list_set
 from score_func import *
 
-delay = 0.1
-
 t=threading.Thread(target=LD.main, args=())
 t.setDaemon(True)
 t.start()
@@ -41,63 +39,33 @@ color_list1 = [3, 3, 3, 3, 3, 3, 7, 7, 7, 7, 7, 7]
 color_list2 = [7, 7, 7, 7, 7, 7, 3, 3, 3, 3, 3, 3]
 
 def main():
-    game_num = sys.argv[1] # 'dodger' or 'brick'
-    game_score = sys.argv[2] # 0 s 1~999
-    if game_num == 1:
-        game = "dodger"
-    elif game_num == 2:
-        game = "brick"
-    score = int(input("score : "))
+    gmae = sys.argv[1] # 'dodger' or 'brick'
+    score = sys.argv[2] # 0 s 1~999
     index = get_index(game, score)
     add_score(game, score)
     matrix_list = get_matrix_list(game)
 
-
-    os.system('cls' if os.name == 'nt' else 'clear')
-    while True:
-        
-        oScreen = copy.deepcopy(iScreen) 
+    oScreen = copy.deepcopy(iScreen) 
  
-        # fill matrix 
+    # fill matrix 
 
-        # - Change oScreen matrix output in this area
-        if index == 0:
-            for i in range(len(matrix_list)):
-                drawChar(matrix_list[i], oScreen, w_list[i], h_list[i], xy_list[i], color_list1[i])
-        elif index == 1:
-            for i in range(len(matrix_list)):
-                drawChar(matrix_list[i], oScreen, w_list[i], h_list[i], xy_list[i], color_list2[i])
-        elif index == 2:
-            for i in range(len(matrix_list)):
-                drawChar(matrix_list[i], oScreen, w_list[i], h_list[i], xy_list[i], 7)
+    # - Change oScreen matrix output in this area
+    if index == 0:
+        for i in range(len(matrix_list)):
+            drawChar(matrix_list[i], oScreen, w_list[i], h_list[i], xy_list[i], color_list1[i])
+    elif index == 1:
+        for i in range(len(matrix_list)):
+            drawChar(matrix_list[i], oScreen, w_list[i], h_list[i], xy_list[i], color_list2[i])
+    elif index == 2:
+        for i in range(len(matrix_list)):
+            drawChar(matrix_list[i], oScreen, w_list[i], h_list[i], xy_list[i], 7)
 
+    # - Draw Matrix
+    consoleMatrix(oScreen)
+    drawMatrix(oScreen)
 
-        '''
-        drawChar(char1, oScreen, 5, 7, (1,1), 2)
-        drawChar(char2, oScreen, 5, 7, (7,1), 2)
-        drawChar(char3, oScreen, 5, 7, (13,1), 2)
-        drawChar(num1, oScreen, 3, 5, (20,2), 2)
-        drawChar(num2, oScreen, 3, 5, (24,2), 2)
-        drawChar(num3, oScreen, 3, 5, (28,2), 2)
-        drawChar(char4, oScreen, 5, 7, (1,9), 2)
-        drawChar(char5, oScreen, 5, 7, (7,9), 2)
-        drawChar(char6, oScreen, 5, 7, (13,9), 2)
-        drawChar(num4, oScreen, 3, 5, (20,10), 2)
-        drawChar(num5, oScreen, 3, 5, (24,10), 2)
-        drawChar(num6, oScreen, 3, 5, (28,10), 2)
-        '''
-
-        # - Draw Matrix
-        consoleMatrix(oScreen)
-        drawMatrix(oScreen)
-
-
-        time.sleep(delay)
+    time.sleep(7)
         
-        os.system('cls' if os.name == 'nt' else 'clear')
-
-
-
 def consoleMatrix(screen):
     for i in screen:
         print(i)
