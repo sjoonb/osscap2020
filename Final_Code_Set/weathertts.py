@@ -18,6 +18,4 @@ def weather_tts():
     temp_info = info[1][0]
     diff_info = info[2] #높아요, 낮아요
     now=time.localtime()
-    tts_weather(now.tm_hour, now.tm_min, location, temp, temp_info, diff_info)
-
-weather_tts()
+    tts.tts_weather(now.tm_hour, now.tm_min, location, temp, temp_info, diff_info)

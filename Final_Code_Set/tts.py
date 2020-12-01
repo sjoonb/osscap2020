@@ -36,5 +36,4 @@ def tts_weather(h, m, loc, c1, c2, i):
         weather_str = h + "시 " + m + "분 현재 " + loc + " 기온은 " + c1 + "도 입니다 어제보다 " + c2 + "도 높습니다"
     elif i == "낮아요":
         weather_str = h + "시 " + m + "분 현재 " + loc + " 기온은 " + c1 + "도 입니다 어제보다 " + c2 + "도 낮습니다"
-    print(weather_str)
-    #play_tts(weather_str)
+    play_tts(weather_str)
