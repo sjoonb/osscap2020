@@ -20,9 +20,17 @@ def tts_score(score, g):
 def tts_high_score(g):
     if g == 'd':
         game = "dodger"
+        k = 2
     elif g == 'b':
         game = "brick"
+        k = 1
     score = score_func.get_score(game)[0][1]
+    score = str(score)
+    for i in range(k):
+        if score[0] == '0':
+            score[0] = ''
+        else:
+            break
     if g == 'd':
         score_str = "최고 기록은 " + str(score) + "점 입니다"
     elif g == 'b':
