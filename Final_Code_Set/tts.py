@@ -9,17 +9,23 @@ def play_tts(string):
     tts.save("ttsplay.mp3")
     os.system("omxplayer ttsplay.mp3")
 
-def tts_score(score):
-    score_str = "현재 점수는" + str(score) + "점 입니다" 
+def tts_score(score, g):
+    if g == 'd':
+        score_str = "현재 점수는" + str(score) + "점 입니다" 
+    elif g == 'b':
+        score_str = "현재 점수는" + str(score) + "초 입니다" 
     play_tts(score_str)
 
 def tts_high_score(g):
-    if g == "d":
+    if g == 'd':
         game = "dodger"
-    elif g == "b":
+    elif g == 'b':
         game = "brick"
     score = score_func.get_score(game)[0][1]
-    score_str = "최고 기록은 " + str(score) + "점 입니다"
+    if g == 'd':
+        score_str = "최고 기록은 " + str(score) + "점 입니다"
+    elif g == 'b':
+        score_str = "최고 기록은 " + str(score) + "초 입니다"
     play_tts(score_str)
 
 def tts_set_high_score():
