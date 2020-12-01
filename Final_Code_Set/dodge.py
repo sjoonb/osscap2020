@@ -13,6 +13,7 @@ import HC_SR04 as RS
 import random
 import threading
 import keyboard
+import list_set
 #import time
 import os
 import copy
@@ -74,6 +75,10 @@ def main():
     highscore = 25
     while True:
         if gameOver and time.time() - 4 > gameOverTime:
+            oScreen = copy.deepcopy(iScreen)
+            print_GameOver(oScreen)
+            drawMatrix(oScreen, score, highscore)
+            time.sleep(10)
             os.system("python3 argv.py {0} {1}".format('dodge', score))
             break 
         # First setting
@@ -300,6 +305,22 @@ def drawMatrix(array, score, highscore):
 def terminate():
     pygame.quit()
     sys.exit()
+
+def drawChar(char, screen, width, height, direction, color):
+    for i in range(width):
+        for j in range(height):
+            if char[j][i] == 1:
+                screen[direction[1]+j][direction[0]+i] = color
+
+def print_GameOver(oScreen):
+    drawChar(list_set.alpha_G, oScreen, 5, 7, (1,1), 3)
+    drawChar(list_set.alpha_a, oScreen, 5, 7, (7,1), 3)
+    drawChar(list_set.alpha_m, oScreen, 5, 7, (13,1), 3)
+    drawChar(list_set.alpha_e, oScreen, 5, 7, (19,1), 3)
+    drawChar(list_set.alpha_O, oScreen, 5, 7, (8, 9), 3)
+    drawChar(list_set.alpha_v, oScreen, 5, 7, (14, 9), 3)
+    drawChar(list_set.alpha_e, oScreen, 5, 7, (20, 9), 3)
+    drawChar(list_set.alpha_r, oScreen, 5, 7, (26, 9), 3)
 
 if __name__ == '__main__':
     main()
