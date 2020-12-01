@@ -31,6 +31,7 @@ Example usage:
 import re
 import sys
 import time
+import os
 
 from google.cloud import speech
 import pyaudio
@@ -38,7 +39,7 @@ from six.moves import queue
 
 # Audio recording parameters
 STREAMING_LIMIT = 240000  # 4 minutes
-SAMPLE_RATE = 16000
+SAMPLE_RATE = 44100
 CHUNK_SIZE = int(SAMPLE_RATE / 10)  # 100ms
 
 RED = "\033[0;31m"
@@ -247,7 +248,7 @@ def main():
     config = speech.RecognitionConfig(
         encoding=speech.RecognitionConfig.AudioEncoding.LINEAR16,
         sample_rate_hertz=SAMPLE_RATE,
-        language_code="en-US",
+        language_code="ko-KR",
         max_alternatives=1,
     )
 
@@ -257,6 +258,7 @@ def main():
 
     mic_manager = ResumableMicrophoneStream(SAMPLE_RATE, CHUNK_SIZE)
     print(mic_manager.chunk_size)
+    #os.system('clear')
     sys.stdout.write(YELLOW)
     sys.stdout.write('\nListening, say "Quit" or "Exit" to stop.\n\n')
     sys.stdout.write("End (ms)       Transcript Results/Status\n")
@@ -296,8 +298,8 @@ def main():
             stream.new_stream = True
 
 
-if __name__ == "__main__":
 
+if __name__ == "__main__":
     main()
 
 # [END speech_transcribe_infinite_streaming]

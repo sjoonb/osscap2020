@@ -7,6 +7,7 @@ import threading
 import time
 import copy
 import os
+import sys
 
 
 t=threading.Thread(target=LD.main, args=())
@@ -19,7 +20,9 @@ delay = 0.03
 
 
 mode_list = ['mouse', 'keyboard', 'sensor']
-mode = mode_list[1]
+#mode = mode_list[1]
+mode = sys.argv[1]
+
 isfullscreen = False
 
 if mode == 'mouse':

@@ -47,7 +47,7 @@ GREEN = "\033[0;32m"
 YELLOW = "\033[0;33m"
 
 os.system('export GOOGLE_APPLICATION_CREDENTIALS="/home/pi/Downloads/test-fcb1f5e8c98c.json"')
-#print('export GOOGLE_APPLICATION_CREDENTIALS="/home/pi/Downloads/test-fcb1f5e8c98c.json"')
+print('export GOOGLE_APPLICATION_CREDENTIALS="/home/pi/Downloads/test-fcb1f5e8c98c.json"')
 def get_current_time():
     """Return Current Time in MS."""
 
@@ -238,6 +238,15 @@ def listen_print_loop(responses, stream):
             if re.search(r"\b(피하기)\b", transcript, re.I):
                 stream.closed = True
                 return '피하기'
+            if re.search(r"\b(키보드)\b", transcript, re.I):
+                stream.closed = True
+                return 'keyboard'
+            if re.search(r"\b(마우스)\b", transcript, re.I):
+                stream.closed = True
+                return 'mouse'
+            if re.search(r"\b(센서)\b", transcript, re.I):
+                stream.closed = True
+                return 'sensor'
             elif re.search(r"\b(exit|quit)\b", transcript, re.I):
                 sys.stdout.write(YELLOW)
                 sys.stdout.write("Exiting...\n")

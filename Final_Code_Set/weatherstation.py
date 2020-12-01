@@ -1,5 +1,6 @@
 from matrix import *
 import LED_display as LD
+import stt_thread as ST
 import threading
 
 from urllib.request import urlopen, Request
@@ -16,6 +17,9 @@ t=threading.Thread(target=LD.main, args=())
 t.setDaemon(True)
 t.start()
 
+t2=threading.Thread(target=ST.main, args=())
+t2.setDaemon(True)
+t2.start()
 
 def numberIcon(num):
     iconlist=[icons.num_0,icons.num_1,icons.num_2,icons.num_3,icons.num_4,icons.num_5,icons.num_6,icons.num_7,icons.num_8,icons.num_9,icons.X]

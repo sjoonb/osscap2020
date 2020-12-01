@@ -36,7 +36,8 @@ isfullscreen = False
 
 # Mode
 mode_list = ['mouse', 'keyboard', 'sensor']
-mode = mode_list[0]
+#mode = mode_list[0]
+mode = sys.argv[1]
 
 if mode == 'mouse':
     isfullscreen = True
