@@ -10,7 +10,7 @@ import time
 import requests
 import copy
 
-import icons
+import list_set
 
 t=threading.Thread(target=LD.main, args=())
 t.setDaemon(True)
