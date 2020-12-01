@@ -34,13 +34,13 @@ def drawChar(char, screen, width, height, direction, color):
             if char[j][i] == 0:
                 screen[direction[1]+j][direction[0]+i] = 0
             if char[j][i] == 1:
-                screen[direction[1]+j][direction[0]+i] = 3
+                screen[direction[1]+j][direction[0]+i] = 7
             if char[j][i] == 2:
                 screen[direction[1]+j][direction[0]+i] = 6
             if char[j][i] == 3:
                 screen[direction[1]+j][direction[0]+i] = 4
-            if char[j][i] == 4:
-                screen[direction[1]+j][direction[0]+i] = 7
+            if char[j][i] == 5:
+                screen[direction[1]+j][direction[0]+i] = 3
 
 def drawMatrix(array):
     # color = 0 : 'None', 1 : 'Red', 2 : 'Green', 3 : 'Yellow', 4 : 'Blue', 5 : 'Purple', 6 : 'Crystal', 7 : 'White'
