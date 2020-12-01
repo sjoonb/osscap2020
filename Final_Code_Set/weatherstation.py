@@ -2,7 +2,6 @@ from matrix import *
 import LED_display as LD
 import threading
 import stt
-import keyboard
 
 from urllib.request import urlopen, Request
 import urllib
