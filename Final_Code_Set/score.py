@@ -5,8 +5,7 @@ import time
 import copy
 import os
 
-import alphabet
-import number
+import list_set
 from score_func import *
 
 delay = 0.1
@@ -113,79 +112,79 @@ def get_matrix_list(game):
     an_list = get_alpha_num(game)
     for i in an_list:
         if i == '0':
-            matrix_list.append(number.num_0)
+            matrix_list.append(list_set.num_0)
         elif i == '1':
-            matrix_list.append(number.num_1)
+            matrix_list.append(list_set.num_1)
         elif i == '2':
-            matrix_list.append(number.num_2)
+            matrix_list.append(list_set.num_2)
         elif i == '3':
-            matrix_list.append(number.num_3)
+            matrix_list.append(list_set.num_3)
         elif i == '4':
-            matrix_list.append(number.num_4)
+            matrix_list.append(list_set.num_4)
         elif i == '5':
-            matrix_list.append(number.num_5)
+            matrix_list.append(list_set.num_5)
         elif i == '6':
-            matrix_list.append(number.num_6)
+            matrix_list.append(list_set.num_6)
         elif i == '7':
-            matrix_list.append(number.num_7)
+            matrix_list.append(list_set.num_7)
         elif i == '8':
-            matrix_list.append(number.num_8)
+            matrix_list.append(list_set.num_8)
         elif i == '9':
-            matrix_list.append(number.num_9)
+            matrix_list.append(list_set.num_9)
         elif i == 's':
-            matrix_list.append(number.alpha_s)
+            matrix_list.append(list_set.num_s)
         elif i == 'A':
-            matrix_list.append(alphabet.alpha_a)
+            matrix_list.append(list_set.alpha_A)
         elif i == 'B':
-            matrix_list.append(alphabet.alpha_b)
+            matrix_list.append(list_set.alpha_B)
         elif i == 'C':
-            matrix_list.append(alphabet.alpha_c)
+            matrix_list.append(list_set.alpha_C)
         elif i == 'D':
-            matrix_list.append(alphabet.alpha_d)
+            matrix_list.append(list_set.alpha_D)
         elif i == 'E':
-            matrix_list.append(alphabet.alpha_e)
+            matrix_list.append(list_set.alpha_E)
         elif i == 'F':
-            matrix_list.append(alphabet.alpha_f)
+            matrix_list.append(list_set.alpha_F)
         elif i == 'G':
-            matrix_list.append(alphabet.alpha_g)
+            matrix_list.append(list_set.alpha_G)
         elif i == 'H':
-            matrix_list.append(alphabet.alpha_h)
+            matrix_list.append(list_set.alpha_H)
         elif i == 'I':
-            matrix_list.append(alphabet.alpha_i)
+            matrix_list.append(list_set.alpha_I)
         elif i == 'J':
-            matrix_list.append(alphabet.alpha_j)
+            matrix_list.append(list_set.alpha_J)
         elif i == 'K':
-            matrix_list.append(alphabet.alpha_k)
+            matrix_list.append(list_set.alpha_K)
         elif i == 'L':
-            matrix_list.append(alphabet.alpha_l)
+            matrix_list.append(list_set.alpha_L)
         elif i == 'M':
-            matrix_list.append(alphabet.alpha_m)
+            matrix_list.append(list_set.alpha_M)
         elif i == 'N':
-            matrix_list.append(alphabet.alpha_n)
+            matrix_list.append(list_set.alpha_N)
         elif i == 'O':
-            matrix_list.append(alphabet.alpha_o)
+            matrix_list.append(list_set.alpha_O)
         elif i == 'P':
-            matrix_list.append(alphabet.alpha_p)
+            matrix_list.append(list_set.alpha_P)
         elif i == 'Q':
-            matrix_list.append(alphabet.alpha_q)
+            matrix_list.append(list_set.alpha_Q)
         elif i == 'R':
-            matrix_list.append(alphabet.alpha_r)
+            matrix_list.append(list_set.alpha_R)
         elif i == 'S':
-            matrix_list.append(alphabet.alpha_s)
+            matrix_list.append(list_set.alpha_S)
         elif i == 'T':
-            matrix_list.append(alphabet.alpha_t)
+            matrix_list.append(list_set.alpha_T)
         elif i == 'U':
-            matrix_list.append(alphabet.alpha_u)
+            matrix_list.append(list_set.alpha_U)
         elif i == 'V':
-            matrix_list.append(alphabet.alpha_v)
+            matrix_list.append(list_set.alpha_V)
         elif i == 'W':
-            matrix_list.append(alphabet.alpha_w)
+            matrix_list.append(list_set.alpha_W)
         elif i == 'X':
-            matrix_list.append(alphabet.alpha_x)
+            matrix_list.append(list_set.alpha_X)
         elif i == 'Y':
-            matrix_list.append(alphabet.alpha_y)
+            matrix_list.append(list_set.alpha_Y)
         elif i == 'Z':
-            matrix_list.append(alphabet.alpha_z)
+            matrix_list.append(list_set.alpha_Z)
     return matrix_list
 
             

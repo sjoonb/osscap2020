@@ -5,6 +5,7 @@ import LED_display as LD
 import HC_SR04 as RS
 import threading
 import time
+import list_set
 import copy
 import os
 
@@ -288,11 +289,11 @@ def drawChar(char, screen, width, height, direction, color):
                 screen[direction[1]+j][direction[0]+i] = color
 
 def print_Clear(oScreen):
-    drawChar(alphabet.alpha_c, oScreen, 5, 7, (1,4), 1)
-    drawChar(s_alphabet.alpha_l, oScreen, 5, 7, (7, 4), 1)
-    drawChar(s_alphabet.alpha_e, oScreen, 5, 7, (13, 4), 1)
-    drawChar(s_alphabet.alpha_a, oScreen, 5, 7, (19, 4), 1)
-    drawChar(s_alphabet.alpha_r, oScreen, 5, 7, (25, 4), 1)
+    drawChar(list_set.alpha_C, oScreen, 5, 7, (1,4), 1)
+    drawChar(list_set.alpha_l, oScreen, 5, 7, (7, 4), 1)
+    drawChar(list_set.alpha_e, oScreen, 5, 7, (13, 4), 1)
+    drawChar(list_set.alpha_a, oScreen, 5, 7, (19, 4), 1)
+    drawChar(list_set.alpha_r, oScreen, 5, 7, (25, 4), 1)
             
             # color = 0 : 'None', 1 : 'Red', 2 : 'Green', 3 : 'Yellow', 4 : 'Blue', 5 : 'Purple', 6 : 'Crystal', 7 : 'White'
 
