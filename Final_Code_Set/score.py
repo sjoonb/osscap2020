@@ -39,7 +39,7 @@ color_list1 = [3, 3, 3, 3, 3, 3, 7, 7, 7, 7, 7, 7]
 color_list2 = [7, 7, 7, 7, 7, 7, 3, 3, 3, 3, 3, 3]
 
 def main():
-    gmae = sys.argv[1] # 'dodger' or 'brick'
+    game = sys.argv[1] # 'dodger' or 'brick'
     score = sys.argv[2] # 0 s 1~999
     index = get_index(game, score)
     add_score(game, score)
