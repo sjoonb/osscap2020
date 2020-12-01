@@ -17,7 +17,7 @@ t.start()
 
 
 def numberIcon(num):
-    iconlist=[number.num_0,number.num_1,number.num_2,number.num_3,number.num_4,number.num_5,number.num_6,number.num_7,number.num_8,number.num_9,number.X]
+    iconlist=[list_set.num_0,list_set.num_1,list_set.num_2,list_set.num_3,list_set.num_4,list_set.num_5,list_set.num_6,list_set.num_7,list_set.num_8,list_set.num_9,list_set.num_0]
 
     for i in range(0,10):
         if int(num)==i:
@@ -73,15 +73,15 @@ def weather(oScreen):
 
     #draw weather icon
     if weather == '맑음':
-        drawChar(icons.Sun,oScreen,32,16,(0,0),2)
+        drawChar(list_set.Sun,oScreen,32,16,(0,0),2)
     elif weather == '흐림':
         drawChar(icon.Fog,oScreen,32,16,(0,0),2)
     elif weather == '구름 많음':
-        drawChar(icons.Cloud,oScreen,32,16,(0,0),2)
+        drawChar(list_set.Cloud,oScreen,32,16,(0,0),2)
     elif weather == '비':
-        drawChar(icons.Rain,oScreen,32,16,(0,0),2)
+        drawChar(list_set.Rain,oScreen,32,16,(0,0),2)
     elif weather == '눈':
-        drawChar(icons.Snow,oScreen,32,16,(0,0),2)
+        drawChar(list_set.Snow,oScreen,32,16,(0,0),2)
 
     # Sets Temperature Color
     if int(temp) <= 0:
@@ -99,22 +99,22 @@ def weather(oScreen):
 
    # Draw Temperature
     if int(temp)<-10:
-        drawChar(icons.Minus, oScreen,3,5,post1,TempColor)
+        drawChar(list_set.Minus, oScreen,3,5,post1,TempColor)
         drawChar(numberIcon(temp[1]),oScreen,3,5,post2,TempColor)
         drawChar(numberIcon(temp[2]),oScreen,3,5,post3,TempColor)
-        drawChar(icons.Cdegree,oScreen,4,5,post4,TempColor)
+        drawChar(list_set.Cdegree,oScreen,4,5,post4,TempColor)
     if int(temp)<0:
-        drawChar(icons.Minus, oScreen,3,5,post2,TempColor)
+        drawChar(list_set.Minus, oScreen,3,5,post2,TempColor)
         drawChar(numberIcon(temp[1]),oScreen,3,5,post3,TempColor)
-        drawChar(icons.Cdegree,oScreen,4,5,post4,TempColor)
+        drawChar(list_set.Cdegree,oScreen,4,5,post4,TempColor)
     if 0<=int(temp)<10:
         drawChar(numberIcon(temp),oScreen,3,5,post2,TempColor)
-        drawChar(icons.Cdegree,oScreen,4,5,post3,TempColor)
+        drawChar(list_set.Cdegree,oScreen,4,5,post3,TempColor)
 
     if 10<=int(temp):
         drawChar(numberIcon(temp[0]),oScreen,3,5,post2,TempColor)
         drawChar(numberIcon(temp[1]),oScreen,3,5,post3,TempColor)
-        drawChar(icons.Cdegree,oScreen,4,5,post4,TempColor)
+        drawChar(list_set.Cdegree,oScreen,4,5,post4,TempColor)
 
     return oScreen
 
@@ -132,14 +132,14 @@ def clock(oScreen):
     minute=str(now.tm_min)
     second=str(now.tm_sec)
     if (int(hour)<10):
-        drawChar(icons.num_0,oScreen,3,5,post5,white)
+        drawChar(list_set.num_0,oScreen,3,5,post5,white)
         drawChar(numberIcon(hour),oScreen,3,5,post6,white)
     elif (int(hour)>10):
         drawChar(numberIcon(hour[0]),oScreen,3,5,post5,white)
         drawChar(numberIcon(hour[1]),oScreen,3,5,post6,white)
-    drawChar(icons.Dot,oScreen,3,5,(21,9),white)
+    drawChar(list_set.Dot,oScreen,3,5,(21,9),white)
     if (int(minute)<10):
-        drawChar(icons.num_0,oScreen,3,5,post7,white)
+        drawChar(list_set.num_0,oScreen,3,5,post7,white)
         drawChar(numberIcon(minute),oScreen,3,5,post8,white)
     elif (int(minute)>10):
         drawChar(numberIcon(minute[0]),oScreen,3,5,post7,white)
