@@ -98,7 +98,7 @@ def weather(oScreen):
    # Set Temperature Position
     post1=(14,1)
     post2=(18,1)
-    post3=(23,1)
+    post3=(22,1)
     post4=(27,1)
 
    # Draw Temperature
