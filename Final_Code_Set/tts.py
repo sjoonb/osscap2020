@@ -6,7 +6,14 @@ def play_tts(string):
     tts.save("ttsplay.mp3")
     os.system("omxplayer test.mp3")
 '''
-def tts_high_score(score):
+import score_func
+def tts_score(score):
+    score_str = "현재 점수는" + str(score) + "점 입니다" 
+    play_tts(score_str)
+
+def tts_high_score():
+    score=score_func.get_score('dodger')[0][1]
+    #임의로 dodger 점수를 읽어오는 중. 수정 필요
     score_str = "최고 기록은 " + str(score) + "점 입니다"
     play_tts(score_str)
 
