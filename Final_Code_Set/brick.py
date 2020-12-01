@@ -6,6 +6,7 @@ import HC_SR04 as RS
 import threading
 import time
 import copy
+import list_set
 import os
 import sys
 
@@ -58,10 +59,16 @@ def main():
 
     while True:
         if gameOver:
+            oScreen = cpoy.deepcopy(iScreen)
+            print_GameOver(oScreen)
+            drawMatrix(oScreen)
             time.sleep(1)
             os.system("python3 argv.py {0} {1}".format('brick', -1))
             break  
         elif gameWin == 2:
+            oScreen = copy.deepcopy(iScreen)
+            print_Clear(oScreen)
+            drawMatrix(oScreen)
             time_score = round(time.time() - start_time)
             time.sleep(1)
             os.system("python3 argv.py {0} {1}".format('brick', time_score))
@@ -285,6 +292,29 @@ def drawMatrix(array):
                 continue
             
             # color = 0 : 'None', 1 : 'Red', 2 : 'Green', 3 : 'Yellow', 4 : 'Blue', 5 : 'Purple', 6 : 'Crystal', 7 : 'White'
+
+def drawChar(char, screen, width, height, direction, color):
+    for i in range(width):
+        for j in range(height):
+            if char[j][i] == 1:
+                screen[direction[1]+j][direction[0]+i] = color
+
+def print_Clear(oScreen):
+    drawChar(list_set.alpha_C, oScreen, 5, 7, (1,4), 2)
+    drawChar(list_set.alpha_l, oScreen, 5, 7, (7, 4), 2)
+    drawChar(list_set.alpha_e, oScreen, 5, 7, (13, 4), 2)
+    drawChar(list_set.alpha_a, oScreen, 5, 7, (19, 4), 2)
+    drawChar(list_set.alpha_r, oScreen, 5, 7, (25, 4), 2)
+
+def print_GameOver(oScreen):
+    drawChar(list_set.alpha_G, oScreen, 5, 7, (1,1), 4)
+    drawChar(list_set.alpha_a, oScreen, 5, 7, (7,1), 4)
+    drawChar(list_set.alpha_m, oScreen, 5, 7, (13,1), 4)
+    drawChar(list_set.alpha_e, oScreen, 5, 7, (19,1), 4)
+    drawChar(list_set.alpha_O, oScreen, 5, 7, (8, 9), 4)
+    drawChar(list_set.alpha_v, oScreen, 5, 7, (14, 9), 4)
+    drawChar(list_set.alpha_e, oScreen, 5, 7, (20, 9), 4)
+    drawChar(list_set.alpha_r, oScreen, 5, 7, (26, 9), 4)
 
 if __name__ == '__main__':
     main()

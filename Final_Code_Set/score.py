@@ -4,6 +4,7 @@ import threading
 import time
 import copy
 import os
+import sys
 
 import list_set
 from score_func import *
@@ -40,7 +41,8 @@ color_list1 = [3, 3, 3, 3, 3, 3, 7, 7, 7, 7, 7, 7]
 color_list2 = [7, 7, 7, 7, 7, 7, 3, 3, 3, 3, 3, 3]
 
 def main():
-    game_num = int(input("game : "))
+    game_num = sys.argv[1] # 'dodger' or 'brick'
+    game_score = sys.argv[2] # 0 s 1~999
     if game_num == 1:
         game = "dodger"
     elif game_num == 2:
