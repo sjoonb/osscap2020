@@ -14,7 +14,6 @@ import copy
 import list_set
 import weathertts
 
-weathertts.weather_tts()
 
 t=threading.Thread(target=LD.main, args=())
 t.setDaemon(True)

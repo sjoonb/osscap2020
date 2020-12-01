@@ -34,13 +34,13 @@ BADDIEMINSIZE = 1
 BADDIEMAXSIZE = 5
 BADDIEMINSPEED = 4
 BADDIEMAXSPEED = 1
-ADDNEWBADDIERATE = 50
+ADDNEWBADDIERATE = 5
 isfullscreen = False
 
 # Mode
 mode_list = ['mouse', 'keyboard', 'sensor']
-mode = mode_list[1]
-#mode = sys.argv[1]
+#mode = mode_list[1]
+mode = sys.argv[1]
 
 if mode == 'mouse':
     isfullscreen = True

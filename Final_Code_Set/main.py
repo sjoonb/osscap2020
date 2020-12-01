@@ -17,16 +17,24 @@ def main():
                 print("게임!!")
                 kindofgame = stt.main()
                 if kindofgame == '피하기':
-                    print("pihagi!!")
-                    mode = selectMode()
-                    if mode:
-                        print("mode!!", mode)
-                        os.system("python3 dodge.py {0}".format(mode))
+                    while(True):
+                        print("pihagi!!")
+                        mode = selectMode()
+                        if mode != 'back':
+                            print("mode!!", mode)
+                            os.system("python3 dodge.py {0}".format(mode))
+                        elif mode == 'back':
+                            print("뒤로")
+                            break
                 elif kindofgame == '벽돌':
-                    print("Byukdoll!!")
-                    mode = selectMode()
-                    if mode:
-                        os.system("python3 brick.py {0}".format(mode))
+                    while(True):
+                        print("Byukdoll!!")
+                        mode = selectMode()
+                        if mode != 'back':
+                            os.system("python3 brick.py {0}".format(mode))
+                        elif mode == 'back':
+                            print("뒤로")
+                            break
                 elif kindofgame == 'playtime':
                     print("playtime!")
                     f=open("ptime.txt", "r")
@@ -49,7 +57,7 @@ def main():
 
 def selectMode():
     mode = stt.main()
-    if mode == 'keyboard' or mode == 'mouse' or mode == 'sensor':
+    if mode == 'keyboard' or mode == 'mouse' or mode == 'sensor' or mode =='back':
         return mode
 
     else:
