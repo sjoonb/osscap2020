@@ -1,7 +1,7 @@
 from matrix import *
 import LED_display as LD
-import stt_thread as ST
 import threading
+import stt
 
 from urllib.request import urlopen, Request
 import urllib
@@ -16,9 +16,6 @@ t=threading.Thread(target=LD.main, args=())
 t.setDaemon(True)
 t.start()
 
-t2=threading.Thread(target=ST.main, args=())
-t2.setDaemon(True)
-t2.start()
 
 def numberIcon(num):
     iconlist=[list_set.num_0,list_set.num_1,list_set.num_2,list_set.num_3,list_set.num_4,list_set.num_5,list_set.num_6,list_set.num_7,list_set.num_8,list_set.num_9,list_set.num_0]
@@ -153,7 +150,6 @@ def clock(oScreen):
 
 count = 0
 while True:
-    print(count)
     if count % 600 == 0:
         oScreen=copy.deepcopy(iScreen)
         oScreen = weather(oScreen)
