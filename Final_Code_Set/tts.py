@@ -46,7 +46,10 @@ def tts_clock(h, m):
     play_tts(clock_str)
 
 def tts_play_time(ptime):
-    ptime_str = "게임을 이용한 지 " + str(ptime) + "분 지났습니다"
+    if ptime == 0:
+        ptime_str = "방금 게임을 시작했습니다"
+    else:
+        ptime_str = "게임을 이용한 지 " + str(ptime) + "분 지났습니다"
     play_tts(ptime_str)
 
 def tts_weather(h, m, loc, c1, c2, i):
