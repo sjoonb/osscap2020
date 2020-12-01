@@ -226,6 +226,9 @@ def listen_print_loop(responses, stream):
 
             # Exit recognition if any of the transcribed phrases could be
             # one of our keywords.
+            if re.search(r"\b(뒤로)\b", transcript, re.I):
+                stream.closed = True
+                return 'back'
             if re.search(r"\b(게임)\b", transcript, re.I):
                 stream.closed = True
                 return '게임'

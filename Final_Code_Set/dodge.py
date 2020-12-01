@@ -15,6 +15,7 @@ import threading
 import keyboard
 import list_set
 #import time
+import scoreboard
 import os
 import copy
 
@@ -37,8 +38,8 @@ isfullscreen = False
 
 # Mode
 mode_list = ['mouse', 'keyboard', 'sensor']
-#mode = mode_list[0]
-mode = sys.argv[1]
+mode = mode_list[1]
+#mode = sys.argv[1]
 
 if mode == 'mouse':
     isfullscreen = True
@@ -53,14 +54,15 @@ t=threading.Thread(target=TLD.main, args=())
 t.setDaemon(True)
 t.start()
 
-t2=threading.Thread(target=ST.main, args=())
-t2.setDaemon(True)
-t2.start()
+#t2=threading.Thread(target=ST.main, args=())
+#t2.setDaemon(True)
+#t2.start()
 
 # Screen
 iScreen = [[0 for i in range(WINWIDTH)] for j in range(WINHEIGHT)]
 
 
+#os.system("python3 score.py {0} {1}".format('dodger', 100))
 
 def main():
     moveLeft = False
@@ -74,13 +76,14 @@ def main():
     newGame = True
     highscore = 25
     while True:
-        if gameOver and time.time() - 4 > gameOverTime:
+        if gameOver and time.time() - 2 > gameOverTime:
             oScreen = copy.deepcopy(iScreen)
             print_GameOver(oScreen)
             drawMatrix(oScreen, score, highscore)
-            time.sleep(10)
-            os.system("python3 argv.py {0} {1}".format('dodge', score))
-            break 
+            time.sleep(3)
+            pygame.quit()
+            scoreboard.main('dodger', score)
+            sys.exit()
         # First setting
         if newGame:
             newGame = False
@@ -96,7 +99,6 @@ def main():
             score = 0
             score_count = 0
 
-
         if mode == 'sensor':
             if not gameOver:
                 cellx = RS.get_distance()-10
@@ -105,6 +107,12 @@ def main():
         for event in pygame.event.get():
             if event.type == QUIT or (event.type == KEYDOWN and event.key == K_ESCAPE) or (event.type == KEYDOWN and event.key == ord('q')):
                 terminate()
+            if (event.type == KEYDOWN and event.key == ord('v')):
+                t2=threading.Thread(target=ST.ST_main, args=(str(score))) 
+                t2.setDaemon(True)
+                t2.start()
+                
+
         # Character's move
 
             # mouse mode

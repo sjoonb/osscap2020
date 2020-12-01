@@ -46,7 +46,11 @@ RED = "\033[0;31m"
 GREEN = "\033[0;32m"
 YELLOW = "\033[0;33m"
 
+score = 0
+highscore = 0
 
+os.system('export GOOGLE_APPLICATION_CREDENTIALS="/home/pi/Downloads/test-fcb1f5e8c98c.json"')
+print('export GOOGLE_APPLICATION_CREDENTIALS="/home/pi/Downloads/test-fcb1f5e8c98c.json"')
 def get_current_time():
     """Return Current Time in MS."""
 
@@ -225,9 +229,36 @@ def listen_print_loop(responses, stream):
 
             # Exit recognition if any of the transcribed phrases could be
             # one of our keywords.
+            if re.search(r"\b(점수)\b", transcript, re.I):
+                stream.closed = True
+                return 'score'
             if re.search(r"\b(게임)\b", transcript, re.I):
-                os.system("sudo python3 dodge.py")
-            elif re.search(r"\b(종료|종료)\b", transcript, re.I):
+                stream.closed = True
+                return '게임'
+            if re.search(r"\b(날씨)\b", transcript, re.I):
+                stream.closed = True
+                return '날씨'
+            if re.search(r"\b(벽돌)\b", transcript, re.I):
+                stream.closed = True
+                return '벽돌'
+            if re.search(r"\b(피하기)\b", transcript, re.I):
+                stream.closed = True
+                return '피하기'
+            if re.search(r"\b(키보드)\b", transcript, re.I):
+                stream.closed = True
+                return 'keyboard'
+            if re.search(r"\b(마우스)\b", transcript, re.I):
+                stream.closed = True
+                return 'mouse'
+            if re.search(r"\b(센서)\b", transcript, re.I):
+                stream.closed = True
+                return 'sensor'
+            elif re.search(r"\b(exit|quit)\b", transcript, re.I):
+                sys.stdout.write(YELLOW)
+                sys.stdout.write("Exiting...\n")
+                stream.closed = True
+                break
+            else:
                 sys.stdout.write(YELLOW)
                 sys.stdout.write("Exiting...\n")
                 stream.closed = True
@@ -241,6 +272,7 @@ def listen_print_loop(responses, stream):
             stream.last_transcript_was_final = False
 
 
+
 def main():
     """start bidirectional streaming from microphone input to speech API"""
 
@@ -248,7 +280,7 @@ def main():
     config = speech.RecognitionConfig(
         encoding=speech.RecognitionConfig.AudioEncoding.LINEAR16,
         sample_rate_hertz=SAMPLE_RATE,
-        language_code="ko-KR",
+        language_code="ko-KR", #en-US
         max_alternatives=1,
     )
 
@@ -258,7 +290,6 @@ def main():
 
     mic_manager = ResumableMicrophoneStream(SAMPLE_RATE, CHUNK_SIZE)
     print(mic_manager.chunk_size)
-    #os.system('clear')
     sys.stdout.write(YELLOW)
     sys.stdout.write('\nListening, say "Quit" or "Exit" to stop.\n\n')
     sys.stdout.write("End (ms)       Transcript Results/Status\n")
@@ -283,7 +314,8 @@ def main():
             responses = client.streaming_recognize(streaming_config, requests)
 
             # Now, put the transcription responses to use.
-            listen_print_loop(responses, stream)
+            return_word = listen_print_loop(responses, stream)
+            print(return_word)
 
             if stream.result_end_time > 0:
                 stream.final_request_end_time = stream.is_final_end_time
@@ -296,8 +328,19 @@ def main():
             if not stream.last_transcript_was_final:
                 sys.stdout.write("\n")
             stream.new_stream = True
+    
+        return return_word
 
 
+def ST_main(*score):
+    score = ''.join(score)
+    word = main()
+    if word == 'score':
+        print(score)
+    elif word == 'highscore':
+        pass
+    elif word == 'playtime':
+        pass
 
 if __name__ == "__main__":
     main()

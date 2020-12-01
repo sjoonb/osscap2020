@@ -5,7 +5,7 @@ def add_score(game, score):
     score_index = get_index(game, score)
 
     if score_index != 2:
-        print("You set a new record!")
+        print("You get a new record!")
         while True:
             name = input("Enter your name : ")
             if (name.isalpha() == True) and (len(name) == 3):
@@ -16,7 +16,7 @@ def add_score(game, score):
                 continue
         write_score(game, score, name, score_index)
     else:
-        print("You didn't set a new record")
+        print("You didn't get a new record")
 
 def score_set(game, score):
     new_score = score
