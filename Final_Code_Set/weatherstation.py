@@ -138,14 +138,14 @@ def clock(oScreen):
     if (int(hour)<10):
         drawChar(list_set.num_0,oScreen,3,5,post5,white)
         drawChar(numberIcon(hour),oScreen,3,5,post6,white)
-    elif (int(hour)>10):
+    elif (int(hour)>=10):
         drawChar(numberIcon(hour[0]),oScreen,3,5,post5,white)
         drawChar(numberIcon(hour[1]),oScreen,3,5,post6,white)
     drawChar(list_set.Dot,oScreen,3,5,(21,9),white)
     if (int(minute)<10):
         drawChar(list_set.num_0,oScreen,3,5,post7,white)
         drawChar(numberIcon(minute),oScreen,3,5,post8,white)
-    elif (int(minute)>10):
+    elif (int(minute)>=10):
         drawChar(numberIcon(minute[0]),oScreen,3,5,post7,white)
         drawChar(numberIcon(minute[1]),oScreen,3,5,post8,white)
     #consoleMatrix(oScreen)   
