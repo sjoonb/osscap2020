@@ -30,8 +30,12 @@ cd /home/pi/osscap2020/stt/microphone
 이후 다음 명령어 실행
 pip3 install -r requirements.txt
 
-<Final_Code_set 파이썬 코드들의 library 설치>
+<Final_Code_set 파이썬 코드들의 사용 library 설치>
 pip3 install gtts
+pip3 install pygcurse
+
+
+이 외에도 module 이 없다는 오류가 있을시, pip3 install (modulename)
 
 
 
