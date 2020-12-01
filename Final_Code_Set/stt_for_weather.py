@@ -38,6 +38,7 @@ from six.moves import queue
 
 import weatherstation as WS
 import threading
+import weathertts
 
 # Audio recording parameters
 STREAMING_LIMIT = 240000  # 4 minutes
