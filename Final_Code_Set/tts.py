@@ -20,20 +20,18 @@ def tts_score(score, g):
 def tts_high_score(g):
     if g == 'd':
         game = "dodger"
-        k = 2
     elif g == 'b':
         game = "brick"
-        k = 1
     score = score_func.get_score(game)[0][1]
-    score = str(score)
-    for i in range(k):
-        if score[0] == '0':
-            score[0] = ''
-        else:
-            break
     if g == 'd':
+        if score[0] == '0' and score[1] == '0':
+            score = score[2:]
+        elif score[0] == '0' and score[1] != '0':
+            score = score[1:]
         score_str = "최고 기록은 " + str(score) + "점 입니다"
     elif g == 'b':
+        if score[0] == '0':
+            score = score[1:]
         score_str = "최고 기록은 " + str(score) + "초 입니다"
     play_tts(score_str)
 
@@ -67,4 +65,3 @@ def tts_weather(h, m, loc, c1, c2, i):
     elif i == "낮아요":
         weather_str = h + "시 " + m + "분 현재 " + loc + " 기온은 " + c1 + "도 입니다 어제보다 " + c2 + "도 낮습니다"
     play_tts(weather_str)
-
