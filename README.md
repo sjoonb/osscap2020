@@ -31,6 +31,7 @@ cd /home/pi/osscap2020/stt/microphone
 pip3 install -r requirements.txt
 
 <Final_Code_set 파이썬 코드들의 사용 library 설치>
+
 pip3 install gtts
 pip3 install pygcurse
 pip3 install urlib.request
@@ -40,6 +41,7 @@ pip3 install requests
 pip3 install pygame
 pip3 install RPi.GPIO
 pip3 install 
+
 
 이 외에도 module 이 없다는 오류가 있을시, pip3 install (modulename)
 
