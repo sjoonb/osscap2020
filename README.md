@@ -40,5 +40,9 @@ pip3 install gtts
 export GOOGLE_APPLICATION_CREDENTIALS="/home/user/Downloads/[FILE_NAME].json"
 
 - stt [Errno -9999] Unanticipated host error
-pyaudio 문제일 확률이 높음
-- stt [Errno -9999] Unanticipated host error
+라즈베리파이 오른쪽 위에 볼륨 아이콘 우클릭하여 사용할 마이크, 스피커 장비 직접 선택해줘야함
+
+
+
+
+
