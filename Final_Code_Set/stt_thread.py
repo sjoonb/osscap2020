@@ -233,27 +233,12 @@ def listen_print_loop(responses, stream):
             if re.search(r"\b(점수)\b", transcript, re.I):
                 stream.closed = True
                 return 'score'
-            if re.search(r"\b(게임)\b", transcript, re.I):
+            if re.search(r"\b(최고 기록|최고기록)\b", transcript, re.I):
                 stream.closed = True
-                return '게임'
-            if re.search(r"\b(날씨)\b", transcript, re.I):
+                return 'highscore'
+            if re.search(r"\b(플레이 시간|플레이시간)\b", transcript, re.I):
                 stream.closed = True
-                return '날씨'
-            if re.search(r"\b(벽돌)\b", transcript, re.I):
-                stream.closed = True
-                return '벽돌'
-            if re.search(r"\b(피하기)\b", transcript, re.I):
-                stream.closed = True
-                return '피하기'
-            if re.search(r"\b(키보드)\b", transcript, re.I):
-                stream.closed = True
-                return 'keyboard'
-            if re.search(r"\b(마우스)\b", transcript, re.I):
-                stream.closed = True
-                return 'mouse'
-            if re.search(r"\b(센서)\b", transcript, re.I):
-                stream.closed = True
-                return 'sensor'
+                return 'playtime'
             elif re.search(r"\b(exit|quit)\b", transcript, re.I):
                 sys.stdout.write(YELLOW)
                 sys.stdout.write("Exiting...\n")
@@ -334,7 +319,8 @@ def main():
 
 
 def ST_main(*score):
-    score = ''.join(score)
+    game = score[0] # d or b
+    score = ''.join(score[1:])
     word = main()
     if word == 'score':
         tts.tts_score(score)

@@ -1,0 +1,4 @@
+highscore b or d
+say highscore in dodge.py
+say weather and time and ~~ in weather station
+

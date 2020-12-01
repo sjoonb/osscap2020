@@ -1,6 +1,7 @@
 import stt
 import os
 import time
+import tts
 
 def main():
     while(True):
@@ -26,6 +27,15 @@ def main():
                     mode = selectMode()
                     if mode:
                         os.system("python3 brick.py {0}".format(mode))
+                elif kindofgame == 'playtime':
+                    print("playtime!")
+                    f=open("ptime.txt", "r")
+                    start_time=float(f.readline().replace("\n",""))
+                    f.close()
+                    end_time=time.time()
+                    ptime_s=int(start_time - end_time)
+                    ptime=int(ptime_s/60)
+                    tts.tts_play_time(ptime)
                 elif kindofgame == 'back':
                     print("뒤로")
                     break

@@ -1,12 +1,12 @@
-'''from gtts import gTTS
+from gtts import gTTS
 import os
+import score_func
 
 def play_tts(string):
-    tts = gTTS(text = string, lang = 'en')
-    tts.save("ttsplay.mp3")
+    tts = gTTS(text = string, lang = 'ko')
+    tts.save("test.mp3")
     os.system("omxplayer test.mp3")
-'''
-import score_func
+
 def tts_score(score):
     score_str = "현재 점수는" + str(score) + "점 입니다" 
     play_tts(score_str)
@@ -27,7 +27,7 @@ def tts_clock(h, m):
 
 def tts_play_time(ptime):
     ptime_str = "게임을 이용한 지 " + str(ptime) + "분 지났습니다"
-    play_tts(prime_str)
+    play_tts(ptime_str)
 
 def tts_weather(h, m, loc, c1, c2, i):
     h = str(h)

@@ -250,6 +250,9 @@ def listen_print_loop(responses, stream):
             if re.search(r"\b(센서)\b", transcript, re.I):
                 stream.closed = True
                 return 'sensor'
+            if re.search(r"\b(플레이 시간)\b", transcript, re.I):
+                stream.closed = True
+                return 'playtime'
             elif re.search(r"\b(exit|quit)\b", transcript, re.I):
                 sys.stdout.write(YELLOW)
                 sys.stdout.write("Exiting...\n")

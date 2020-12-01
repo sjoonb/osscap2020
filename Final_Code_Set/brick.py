@@ -2,26 +2,24 @@ import pygame, pygcurse
 from pygame.locals import *
 
 import LED_display as LD
+import stt_thread as ST
 import HC_SR04 as RS
 import threading
 import time
 import copy
 import list_set
-import os
 import sys
 import scoreboard
 
-t=threading.Thread(target=LD.main, args=())
-t.setDaemon(True)
-t.start()
 
 WINWIDTH = 32
 WINHEIGHT = 16
+FPS = 20
 delay = 0.03
 
 
 mode_list = ['mouse', 'keyboard', 'sensor']
-mode = mode_list[1]
+mode = mode_list[2]
 #mode = sys.argv[1]
 
 isfullscreen = False
@@ -29,52 +27,43 @@ isfullscreen = False
 if mode == 'mouse':
     isfullscreen = True
 
-iScreen =[[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
-
-
+iScreen = [[0 for i in range(WINWIDTH)] for j in range(WINHEIGHT)]
 # - Pygcurse board
 
-win = pygcurse.PygcurseWindow(32, 16, fullscreen=isfullscreen)
+win = pygcurse.PygcurseWindow(WINWIDTH, WINHEIGHT, fullscreen=isfullscreen)
+
+t=threading.Thread(target=LD.main, args=())
+t.setDaemon(True)
+t.start()
+
 
 def main():
     newGame = True
     gameOver = False
     gameWin = 0
     start_time = time.time()
+    mainClock = pygame.time.Clock()
 
     while True:
+
         if gameOver:
             oScreen = copy.deepcopy(iScreen)
             print_GameOver(oScreen)
             drawMatrix(oScreen)
             time.sleep(3)
-            os.system("python3 argv.py {0} {1}".format('brick', -1))
-            break  
+            pygame.quit()
+            scoreboard.main('brick', 0)
+            sys.exit()
         elif gameWin == 2:
             oScreen = copy.deepcopy(iScreen)
             print_Clear(oScreen)
             drawMatrix(oScreen)
             time_score = round(time.time() - start_time)
             time.sleep(3)
-            os.system("python3 argv.py {0} {1}".format('brick', time_score))
-            break  
+            pygame.quit()
+            scoreboard.main('brick', time_score)
+            sys.exit()
         
-        oScreen = copy.deepcopy(iScreen) 
         
         if newGame:
             pygame.mouse.set_pos(win.centerx * win.cellwidth, (win.bottom) * win.cellheight)
@@ -89,7 +78,7 @@ def main():
             ballcnt = 0
             ballmv = ball_direction['N']
             
-            bricks =[[1,1]]#[1,1], [6,1], [11,1], [16,1], [21, 1], [26,1], [3,4], [8,4], [13,4], [18,4], [23,4]]
+            bricks =[[1,1], [6,1], [11,1], [16,1], [21, 1], [26,1], [3,4], [8,4], [13,4], [18,4], [23,4]]
 
             if mode == 'keyboard':
                 counter = 0
@@ -98,14 +87,17 @@ def main():
             gameOver = False
             newGame = False
 
-        if mode == 'sensor':
-            if not gameOver:
-                cellx = RS.get_distance()-10
 
         for event in pygame.event.get():
             if event.type == QUIT or (event.type == KEYDOWN and event.key == K_ESCAPE) or (event.type == KEYDOWN and event.key == ord('q')):
                 pygame.quit()
                 sys.exit()
+            if (event.type == KEYDOWN and event.key == ord('v')):
+                time_score = round(time.time() - start_time)
+                t2=threading.Thread(target=ST.ST_main, args=('b', str(time_score))) 
+                t2.setDaemon(True)
+                t2.start()
+                
         # Input
 
             # mouse mode
@@ -138,22 +130,17 @@ def main():
                         counter = 0
                         moveRight = False 
 
-        # Act
-        drawBricks(bricks, oScreen)
-
         if mode == 'sensor':
             if not gameOver:
-                if cellx < 1 or cellx > WINWIDTH -2:
-                    cellx = before_cellx_arr[-1]
-                if abs(cellx - before_cellx_arr[-1]) > 10:
-                    cellx = before_cellx_arr[-1] 
-                else:
-                    cellx = sum(before_cellx_arr[1:]+[cellx],1)//len(before_cellx_arr)
-                    before_cellx_arr.pop(0)
-                    before_cellx_arr.append(cellx)
-                    cellx = before_cellx_arr[-1]
+                cellx = RS.get_distance()-10
 
-        elif mode == 'keyboard': 
+        # Act
+        oScreen = copy.deepcopy(iScreen) 
+
+
+        drawBricks(bricks, oScreen)
+
+        if mode == 'keyboard': 
             if not gameOver:
                 if counter > 2:
                     if moveRight: cellx += 1
@@ -171,6 +158,19 @@ def main():
                 cellx = 2
             if cellx > WINWIDTH-3:
                 cellx = WINWIDTH-3
+        
+        elif mode == 'sensor':
+            if not gameOver:
+                if cellx < 1 or cellx > WINWIDTH -2:
+                    cellx = before_cellx_arr[-1]
+                if abs(cellx - before_cellx_arr[-1]) > 10:
+                    cellx = before_cellx_arr[-1] 
+                else:
+                    cellx = sum(before_cellx_arr[1:]+[cellx],1)//len(before_cellx_arr)
+                    before_cellx_arr.pop(0)
+                    before_cellx_arr.append(cellx)
+                    cellx = before_cellx_arr[-1]
+
 
     
 
@@ -228,32 +228,17 @@ def main():
         else:
             ballcnt += 1
 
-
-        # fill matrix 
-
-        # - Change oScreen matrix output in this area
-
-        # Initialize Pad
-        
-        #moveBall(ballx, bally, oScreen, WINWIDTH, WINHEIGHT)
-        drawPad(cellx, celly, oScreen)
-
-        #ex)
-        
-
-
         # - Draw Matrix
         # consoleMatrix(oScreen)
         #pygcurseMatrix(oScreen)
-        drawMatrix(oScreen)
 
         if len(bricks) == 0:
             gameWin += 1
 
 
-        time.sleep(delay)
-
-        # os.system('cls' if os.name == 'nt' else 'clear')
+        drawPad(cellx, celly, oScreen)
+        drawMatrix(oScreen)
+        mainClock.tick(FPS)
 
 def breakBrick(x, y, screen, bricks):
     for brick in bricks:

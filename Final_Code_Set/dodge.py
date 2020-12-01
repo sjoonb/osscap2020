@@ -12,10 +12,10 @@ import stt_thread as ST
 import HC_SR04 as RS
 import random
 import threading
-import keyboard
 import list_set
 #import time
 import scoreboard
+import score_func
 import os
 import copy
 
@@ -38,8 +38,8 @@ isfullscreen = False
 
 # Mode
 mode_list = ['mouse', 'keyboard', 'sensor']
-#mode = mode_list[1]
-mode = sys.argv[1]
+mode = mode_list[1]
+#mode = sys.argv[1]
 
 if mode == 'mouse':
     isfullscreen = True
@@ -74,7 +74,8 @@ def main():
     gameOver = False
 
     newGame = True
-    highscore = 25
+    highscore = int(score_func.get_score('dodger')[0][1])
+    print(highscore)
     while True:
         if gameOver and time.time() - 2 > gameOverTime:
             oScreen = copy.deepcopy(iScreen)
@@ -99,16 +100,12 @@ def main():
             score = 0
             score_count = 0
 
-        if mode == 'sensor':
-            if not gameOver:
-                cellx = RS.get_distance()-10
-
 
         for event in pygame.event.get():
             if event.type == QUIT or (event.type == KEYDOWN and event.key == K_ESCAPE) or (event.type == KEYDOWN and event.key == ord('q')):
                 terminate()
             if (event.type == KEYDOWN and event.key == ord('v')):
-                t2=threading.Thread(target=ST.ST_main, args=(str(score))) 
+                t2=threading.Thread(target=ST.ST_main, args=('d', str(score))) 
                 t2.setDaemon(True)
                 t2.start()
                 
@@ -145,6 +142,9 @@ def main():
                         moveRight = False 
 
                 
+        if mode == 'sensor':
+            if not gameOver:
+                cellx = RS.get_distance()-10
 
         # add new baddies if needed
         # ADDNEWBADDIERATE determines amount of new baddies
@@ -247,26 +247,6 @@ def main():
         mainClock.tick(FPS)
 
 
-def showStartScreen():
-    while checkForKeyPress() is None:
-        win.fill(bgcolor=BLACK)
-        win.putchars('Pygcurse Dodger', win.centerx-8, win.centery, fgcolor=TEXTCOLOR)
-        if int(time.time() * 2) % 2 == 0: # flashing
-            win.putchars('Press a key to start!', win.centerx-11, win.centery+1, fgcolor=TEXTCOLOR)
-        win.update()
-
-
-def checkForKeyPress():
-    # Go through event queue looking for a KEYUP event.
-    # Grab KEYDOWN events to remove them from the event queue.
-    for event in pygame.event.get([KEYDOWN, KEYUP]):
-        if event.type == KEYDOWN:
-            continue
-        if event.key == K_ESCAPE:
-            terminate()
-        return event.key
-    return None
-
 # Game display
 
 def fillMatrix(bx, by, size, screen, w, h, score):
@@ -287,13 +267,13 @@ def drawMatrix(array, score, highscore):
                     color = random.randint(1,6)
 
                 else:
-                    if score <= 10:
+                    if score <= 100:
                         color = 2
-                    elif score <= 20 :
+                    elif score <= 200:
                         color = 3
-                    elif score <= 30 :
+                    elif score <= 300:
                         color = 4
-                    elif score <= 40 :
+                    elif score <= 400:
                         color = 5
                     else:
                         color = 6

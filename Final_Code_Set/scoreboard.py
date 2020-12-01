@@ -1,11 +1,8 @@
-import sys
 import LED_display as LD
 import threading
 
 import time
 import copy
-import os
-
 import list_set
 from score_func import *
 
@@ -40,9 +37,6 @@ color_list2 = [7, 7, 7, 7, 7, 7, 3, 3, 3, 3, 3, 3]
 
 
 def main(game, score):
-#    score_str = sys.argv[2] # 0 s 1~999
-#    score = int(score_str) 
-#    game = sys.argv[1]
 
     index = get_index(game, score)
     add_score(game, score)
@@ -64,15 +58,10 @@ def main(game, score):
             drawChar(matrix_list[i], oScreen, w_list[i], h_list[i], xy_list[i], 7)
 
     # - Draw Matrix
-    consoleMatrix(oScreen)
     drawMatrix(oScreen)
 
     time.sleep(5)
         
-def consoleMatrix(screen):
-    for i in screen:
-        print(i)
-
 
 def drawChar(char, screen, width, height, direction, color):
     for i in range(width):
