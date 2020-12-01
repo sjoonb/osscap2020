@@ -9,6 +9,7 @@ def play_tts(string):
     tts.save("ttsplay.mp3")
     os.system("omxplayer ttsplay.mp3")
 
+
 def tts_score(score, g):
     if g == 'd':
         score_str = "현재 점수는" + str(score) + "점 입니다" 
@@ -55,3 +56,4 @@ def tts_weather(h, m, loc, c1, c2, i):
     elif i == "낮아요":
         weather_str = h + "시 " + m + "분 현재 " + loc + " 기온은 " + c1 + "도 입니다 어제보다 " + c2 + "도 낮습니다"
     play_tts(weather_str)
+

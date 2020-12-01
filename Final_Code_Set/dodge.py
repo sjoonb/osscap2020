@@ -18,6 +18,7 @@ import scoreboard
 import score_func
 import os
 import copy
+import tts
 
 GREEN = (0, 255, 0)
 BLACK = (0,0,0)
@@ -33,7 +34,7 @@ BADDIEMINSIZE = 1
 BADDIEMAXSIZE = 5
 BADDIEMINSPEED = 4
 BADDIEMAXSPEED = 1
-ADDNEWBADDIERATE = 5
+ADDNEWBADDIERATE = 50
 isfullscreen = False
 
 # Mode
@@ -74,9 +75,8 @@ def main():
     gameOver = False
 
     newGame = True
-    highscore = int(score_func.get_score('dodger')[0][1])
-    print(highscore)
     while True:
+
         if gameOver and time.time() - 2 > gameOverTime:
             oScreen = copy.deepcopy(iScreen)
             print_GameOver(oScreen)
@@ -97,52 +97,59 @@ def main():
             baddies = []
             baddieAddCounter = 0
             gameOver = False
+            highscore = int(score_func.get_score('dodger')[0][1])
             score = 0
             score_count = 0
 
 
-        for event in pygame.event.get():
-            if event.type == QUIT or (event.type == KEYDOWN and event.key == K_ESCAPE) or (event.type == KEYDOWN and event.key == ord('q')):
-                terminate()
-            if (event.type == KEYDOWN and event.key == ord('v')):
-                t2=threading.Thread(target=ST.ST_main, args=('d', str(score))) 
-                t2.setDaemon(True)
-                t2.start()
-                
+        if mode == 'mouse' or mode == 'keyboard':
+            for event in pygame.event.get():
+                if event.type == QUIT or (event.type == KEYDOWN and event.key == K_ESCAPE) or (event.type == KEYDOWN and event.key == ord('q')):
+                    terminate()
+                if (event.type == KEYDOWN and event.key == ord('v')):
+                    t2=threading.Thread(target=ST.ST_main, args=('d', str(score))) 
+                    t2.setDaemon(True)
+                    t2.start()
+                    
 
-        # Character's move
+            # Character's move
 
-            # mouse mode
-            if mode == 'mouse':
-                if event.type == MOUSEMOTION and not gameOver:
-                    mousex, mousey = event.pos
-                    cellx, celly = win.getcoordinatesatpixel(mousex, mousey)
+                # mouse mode
+                if mode == 'mouse':
+                    if event.type == MOUSEMOTION and not gameOver:
+                        mousex, mousey = event.pos
+                        cellx, celly = win.getcoordinatesatpixel(mousex, mousey)
 
-            # keyboard mode
-            elif mode == 'keyboard':
-                if event.type == KEYDOWN:
-                    if event.key == K_LEFT or event.key == ord('a'):
-                        if not gameOver:
-                            cellx -= 1
-                            counter += 1
-                        moveRight = False
-                        moveLeft = True
-                    if event.key == K_RIGHT or event.key == ord('d'):
-                        if not gameOver:
-                            cellx += 1
-                            counter += 1
-                        moveLeft == False
-                        moveRight = True
-                if event.type == KEYUP:
-                    if event.key == K_LEFT or event.key == ord('a'):
-                        counter = 0
-                        moveLeft = False
-                    if event.key == K_RIGHT or event.key == ord('d'):
-                        counter = 0
-                        moveRight = False 
+                # keyboard mode
+                elif mode == 'keyboard':
+                    if event.type == KEYDOWN:
+                        if event.key == K_LEFT or event.key == ord('a'):
+                            if not gameOver:
+                                cellx -= 1
+                                counter += 1
+                            moveRight = False
+                            moveLeft = True
+                        if event.key == K_RIGHT or event.key == ord('d'):
+                            if not gameOver:
+                                cellx += 1
+                                counter += 1
+                            moveLeft == False
+                            moveRight = True
+                    if event.type == KEYUP:
+                        if event.key == K_LEFT or event.key == ord('a'):
+                            counter = 0
+                            moveLeft = False
+                        if event.key == K_RIGHT or event.key == ord('d'):
+                            counter = 0
+                            moveRight = False 
 
                 
         if mode == 'sensor':
+            for event in pygame.event.get():
+                if (event.type == KEYUP and event.key == ord('v')):
+                    t2=threading.Thread(target=ST.ST_main, args=('d', str(score))) 
+                    t2.setDaemon(True)
+                    t2.start()
             if not gameOver:
                 cellx = RS.get_distance()-10
 

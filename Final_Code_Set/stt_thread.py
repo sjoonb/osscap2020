@@ -323,9 +323,9 @@ def ST_main(*score):
     score = ''.join(score[1:])
     word = main()
     if word == 'score':
-        tts.tts_score(score)
+        tts.tts_score(score, game)
     elif word == 'highscore':
-        tts.tts_high_score()
+        tts.tts_high_score(game)
         #임의로 tts_high_score 함수 안에서 dodge 게임 점수 받아오는 중 수정 필요
     elif word == 'playtime':
         f=open("ptime.txt", "r")

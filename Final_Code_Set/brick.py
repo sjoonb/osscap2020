@@ -19,7 +19,7 @@ delay = 0.03
 
 
 mode_list = ['mouse', 'keyboard', 'sensor']
-mode = mode_list[2]
+mode = mode_list[1]
 #mode = sys.argv[1]
 
 isfullscreen = False
@@ -88,49 +88,56 @@ def main():
             newGame = False
 
 
-        for event in pygame.event.get():
-            if event.type == QUIT or (event.type == KEYDOWN and event.key == K_ESCAPE) or (event.type == KEYDOWN and event.key == ord('q')):
-                pygame.quit()
-                sys.exit()
-            if (event.type == KEYDOWN and event.key == ord('v')):
-                time_score = round(time.time() - start_time)
-                t2=threading.Thread(target=ST.ST_main, args=('b', str(time_score))) 
-                t2.setDaemon(True)
-                t2.start()
-                
-        # Input
+        if mode == 'mouse' or mode == 'keyboard':
+            for event in pygame.event.get():
+                if event.type == QUIT or (event.type == KEYDOWN and event.key == K_ESCAPE) or (event.type == KEYDOWN and event.key == ord('q')):
+                    pygame.quit()
+                    sys.exit()
+                if (event.type == KEYDOWN and event.key == ord('v')):
+                    time_score = round(time.time() - start_time)
+                    t2=threading.Thread(target=ST.ST_main, args=('b', str(time_score))) 
+                    t2.setDaemon(True)
+                    t2.start()
+                    
+            # Input
 
-            # mouse mode
-            if mode == 'mouse':
-                if event.type == MOUSEMOTION and not gameOver:
-                    mousex, mousey = event.pos
-                    cellx, celly = win.getcoordinatesatpixel(mousex, mousey)
-                    celly = WINHEIGHT - 2
+                # mouse mode
+                if mode == 'mouse':
+                    if event.type == MOUSEMOTION and not gameOver:
+                        mousex, mousey = event.pos
+                        cellx, celly = win.getcoordinatesatpixel(mousex, mousey)
+                        celly = WINHEIGHT - 2
 
-            # keyboard mode
-            elif mode == 'keyboard':
-                if event.type == KEYDOWN:
-                    if event.key == K_LEFT or event.key == ord('a'):
-                        if not gameOver:
-                            cellx -= 1
-                            counter += 1
-                        moveRight = False
-                        moveLeft = True
-                    if event.key == K_RIGHT or event.key == ord('d'):
-                        if not gameOver:
-                            cellx += 1
-                            counter += 1
-                        moveLeft == False
-                        moveRight = True
-                if event.type == KEYUP:
-                    if event.key == K_LEFT or event.key == ord('a'):
-                        counter = 0
-                        moveLeft = False
-                    if event.key == K_RIGHT or event.key == ord('d'):
-                        counter = 0
-                        moveRight = False 
+                # keyboard mode
+                elif mode == 'keyboard':
+                    if event.type == KEYDOWN:
+                        if event.key == K_LEFT or event.key == ord('a'):
+                            if not gameOver:
+                                cellx -= 1
+                                counter += 1
+                            moveRight = False
+                            moveLeft = True
+                        if event.key == K_RIGHT or event.key == ord('d'):
+                            if not gameOver:
+                                cellx += 1
+                                counter += 1
+                            moveLeft == False
+                            moveRight = True
+                    if event.type == KEYUP:
+                        if event.key == K_LEFT or event.key == ord('a'):
+                            counter = 0
+                            moveLeft = False
+                        if event.key == K_RIGHT or event.key == ord('d'):
+                            counter = 0
+                            moveRight = False 
 
-        if mode == 'sensor':
+        elif mode == 'sensor':
+            for event in pygame.event.get():
+                if (event.type == KEYUP and event.key == ord('v')):
+                    time_score = round(time.time() - start_time)
+                    t2=threading.Thread(target=ST.ST_main, args=('d', str(time_score))) 
+                    t2.setDaemon(True)
+                    t2.start()
             if not gameOver:
                 cellx = RS.get_distance()-10
 
