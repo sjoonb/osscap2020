@@ -36,6 +36,7 @@ import os
 from google.cloud import speech
 import pyaudio
 from six.moves import queue
+import tts
 
 # Audio recording parameters
 STREAMING_LIMIT = 240000  # 4 minutes
@@ -336,11 +337,18 @@ def ST_main(*score):
     score = ''.join(score)
     word = main()
     if word == 'score':
-        print(score)
+        tts.tts_score(score)
     elif word == 'highscore':
-        pass
+        tts.tts_high_score()
+        #임의로 tts_high_score 함수 안에서 dodge 게임 점수 받아오는 중 수정 필요
     elif word == 'playtime':
-        pass
+        f=open("ptime.txt", "r")
+        start_time=float(f.readline().replace("\n",""))
+        f.close()
+        end_time=time.time()
+        ptime_s=int(start_time - end_time)
+        ptime=int(ptime_s/60)
+        tts.tts_play_time(ptime)
 
 if __name__ == "__main__":
     main()
