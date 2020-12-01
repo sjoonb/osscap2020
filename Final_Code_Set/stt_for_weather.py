@@ -233,7 +233,11 @@ def listen_print_loop(responses, stream):
 
             # Exit recognition if any of the transcribed phrases could be
             # one of our keywords.
-            if re.search(r"\b(뒤로)\b", transcript, re.I):
+            if re.search(r"\b(날씨)\b", transcript, re.I):
+                stream.closed = True
+                weathertts.weather_tts()
+                sys.exit()
+            elif re.search(r"\b(뒤로)\b", transcript, re.I):
                 sys.stdout.write("Exiting...\n")
                 stream.closed = True
                 sys.exit()
