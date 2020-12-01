@@ -9,7 +9,7 @@ import copy
 import list_set
 import os
 import sys
-
+import scoreboard
 
 t=threading.Thread(target=LD.main, args=())
 t.setDaemon(True)
@@ -21,8 +21,8 @@ delay = 0.03
 
 
 mode_list = ['mouse', 'keyboard', 'sensor']
-#mode = mode_list[1]
-mode = sys.argv[1]
+mode = mode_list[1]
+#mode = sys.argv[1]
 
 isfullscreen = False
 
@@ -59,10 +59,10 @@ def main():
 
     while True:
         if gameOver:
-            oScreen = cpoy.deepcopy(iScreen)
+            oScreen = copy.deepcopy(iScreen)
             print_GameOver(oScreen)
             drawMatrix(oScreen)
-            time.sleep(1)
+            time.sleep(3)
             os.system("python3 argv.py {0} {1}".format('brick', -1))
             break  
         elif gameWin == 2:
@@ -70,7 +70,7 @@ def main():
             print_Clear(oScreen)
             drawMatrix(oScreen)
             time_score = round(time.time() - start_time)
-            time.sleep(1)
+            time.sleep(3)
             os.system("python3 argv.py {0} {1}".format('brick', time_score))
             break  
         

@@ -2,6 +2,7 @@ from matrix import *
 import LED_display as LD
 import threading
 import stt
+import keyboard
 
 from urllib.request import urlopen, Request
 import urllib
@@ -76,7 +77,7 @@ def weather(oScreen):
     if weather == '맑음':
         drawChar(list_set.Sun,oScreen,32,16,(0,0),2)
     elif weather == '흐림':
-        drawChar(icon.Fog,oScreen,32,16,(0,0),2)
+        drawChar(list_set.Fog,oScreen,32,16,(0,0),2)
     elif weather == '구름많음':
         drawChar(list_set.Cloud,oScreen,32,16,(0,0),2)
     elif weather == '비':
@@ -148,11 +149,16 @@ def clock(oScreen):
     #consoleMatrix(oScreen)   
     drawMatrix(oScreen)
 
-count = 0
-while True:
-    if count % 600 == 0:
-        oScreen=copy.deepcopy(iScreen)
-        oScreen = weather(oScreen)
-    clock(oScreen)
-    time.sleep(1)
-    count += 1
+
+def main():
+    count = 0
+    while True:
+        if count % 600 == 0:
+            oScreen=copy.deepcopy(iScreen)
+            oScreen = weather(oScreen)
+        clock(oScreen)
+        time.sleep(1)
+        count += 1
+
+if __name__ == "__main__": 
+    main()

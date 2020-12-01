@@ -31,7 +31,7 @@ def main():
                     pass
 
         elif word == '날씨':
-            os.system("python3 weatherstation.py")
+            os.system("python3 stt_for_weather.py")
 
 
 def selectMode():
