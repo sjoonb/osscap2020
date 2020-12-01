@@ -8,7 +8,10 @@ def main():
         word = stt.main()
         
         if word == '게임':
-            # txt file time
+            f = open("ptime.txt", "w")
+            f.write(str(time.time()))
+            f.close()
+
             while(True):
                 print("게임!!")
                 kindofgame = stt.main()
