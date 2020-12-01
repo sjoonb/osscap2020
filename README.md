@@ -23,3 +23,22 @@ https://webnautes.tistory.com/1247
 
 이후 terminal 창에 입력
 $ export GOOGLE_APPLICATION_CREDENTIALS="/home/user/Downloads/[FILE_NAME].json"
+
+requirements.txt 가 있는 폴더로 이동
+cd /home/pi/osscap2020/stt/microphone
+
+이후 다음 명령어 실행
+pip3 install -r requirements.txt
+
+<Final_Code_set 파이썬 코드들의 library 설치>
+pip3 install gtts
+
+
+
+# 설치 오류시
+- cloud.google.com/docs/authentication/getting-started 링크가 뜨며 실행이 안될시엔
+export GOOGLE_APPLICATION_CREDENTIALS="/home/user/Downloads/[FILE_NAME].json"
+
+- stt [Errno -9999] Unanticipated host error
+pyaudio 문제일 확률이 높음
+- stt [Errno -9999] Unanticipated host error
