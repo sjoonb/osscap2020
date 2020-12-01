@@ -6,7 +6,6 @@ import threading
 from urllib.request import urlopen, Request
 import urllib
 import bs4
-import schedule
 import time
 import requests
 import copy
@@ -22,7 +21,7 @@ t2.setDaemon(True)
 t2.start()
 
 def numberIcon(num):
-    iconlist=[icons.num_0,icons.num_1,icons.num_2,icons.num_3,icons.num_4,icons.num_5,icons.num_6,icons.num_7,icons.num_8,icons.num_9,icons.X]
+    iconlist=[list_set.num_0,list_set.num_1,list_set.num_2,list_set.num_3,list_set.num_4,list_set.num_5,list_set.num_6,list_set.num_7,list_set.num_8,list_set.num_9,list_set.num_0]
 
     for i in range(0,10):
         if int(num)==i:
@@ -56,7 +55,6 @@ def consoleMatrix(screen):
 iScreen = [[0 for x in range(32)] for y in range(16)]
 oScreen=copy.deepcopy(iScreen)
 
-#win = pygcurse.PygcurseWindow(32, 16, fullscreen=False)
 
 def weather(oScreen):
 
@@ -76,29 +74,18 @@ def weather(oScreen):
 
 #        location= soup.find('div', class_='select_box').find('span', class_='btn_select').text
 #        print(location)
-#        win.fill('@', fgcolor='black', bgcolor='black')
 
     #draw weather icon
     if weather == '맑음':
-#            pygcurseMatrix(icons.Sun)
-#            drawMatrix(icons.Sun)
-        drawChar(icons.Sun,oScreen,32,16,(0,0),2)
+        drawChar(list_set.Sun,oScreen,32,16,(0,0),2)
     elif weather == '흐림':
-#            pygcurseMatrix(icons.Fog)
-#            drawMatrix(icons.Fog)
         drawChar(icon.Fog,oScreen,32,16,(0,0),2)
     elif weather == '구름 많음':
-#            pygcurseMatrix(icons.Cloud)
-#            drawMatrix(icons.Cloud)
-        drawChar(icons.Cloud,oScreen,32,16,(0,0),2)
+        drawChar(list_set.Cloud,oScreen,32,16,(0,0),2)
     elif weather == '비':
-#            pygcurseMatrix(icons.Rain)
-#            drawMatrix(icons.Rain)
-        drawChar(icons.Rain,oScreen,32,16,(0,0),2)
+        drawChar(list_set.Rain,oScreen,32,16,(0,0),2)
     elif weather == '눈':
-#            pygcurseMatrix(icons.Snow)
-#            drawMatrix(icons.Snow)
-        drawChar(icons.Snow,oScreen,32,16,(0,0),2)
+        drawChar(list_set.Snow,oScreen,32,16,(0,0),2)
 
     # Sets Temperature Color
     if int(temp) <= 0:
@@ -116,36 +103,25 @@ def weather(oScreen):
 
    # Draw Temperature
     if int(temp)<-10:
-        drawChar(icons.Minus, oScreen,3,5,post1,TempColor)
+        drawChar(list_set.Minus, oScreen,3,5,post1,TempColor)
         drawChar(numberIcon(temp[1]),oScreen,3,5,post2,TempColor)
         drawChar(numberIcon(temp[2]),oScreen,3,5,post3,TempColor)
-        drawChar(icons.Cdegree,oScreen,4,5,post4,TempColor)
+        drawChar(list_set.Cdegree,oScreen,4,5,post4,TempColor)
     if int(temp)<0:
-        drawChar(icons.Minus, oScreen,3,5,post2,TempColor)
+        drawChar(list_set.Minus, oScreen,3,5,post2,TempColor)
         drawChar(numberIcon(temp[1]),oScreen,3,5,post3,TempColor)
-        drawChar(icons.Cdegree,oScreen,4,5,post4,TempColor)
+        drawChar(list_set.Cdegree,oScreen,4,5,post4,TempColor)
     if 0<=int(temp)<10:
         drawChar(numberIcon(temp),oScreen,3,5,post2,TempColor)
-        drawChar(icons.Cdegree,oScreen,4,5,post3,TempColor)
+        drawChar(list_set.Cdegree,oScreen,4,5,post3,TempColor)
 
     if 10<=int(temp):
         drawChar(numberIcon(temp[0]),oScreen,3,5,post2,TempColor)
         drawChar(numberIcon(temp[1]),oScreen,3,5,post3,TempColor)
-        drawChar(icons.Cdegree,oScreen,4,5,post4,TempColor)
-#        drawMatrix(oScreen)
-
+        drawChar(list_set.Cdegree,oScreen,4,5,post4,TempColor)
 
     return oScreen
 
-#def pygcurseMatrix(screen):
-#    for i in range(16):
-#        for j in range(32):
-#            if screen[i][j] == 1:
-#                win.putchar('@', j, i, 'white')
-#            elif screen[i][j] == 2:
-#                win.putchar('@', j, i, 'green')
-#    win.update()
-        
 def clock(oScreen):
     now=time.localtime()
     #print('%02d:%02d:%02d'%(now.tm_hour,now.tm_min,now.tm_sec))
@@ -160,14 +136,14 @@ def clock(oScreen):
     minute=str(now.tm_min)
     second=str(now.tm_sec)
     if (int(hour)<10):
-        drawChar(icons.num_0,oScreen,3,5,post5,white)
+        drawChar(list_set.num_0,oScreen,3,5,post5,white)
         drawChar(numberIcon(hour),oScreen,3,5,post6,white)
     elif (int(hour)>10):
         drawChar(numberIcon(hour[0]),oScreen,3,5,post5,white)
         drawChar(numberIcon(hour[1]),oScreen,3,5,post6,white)
-    drawChar(icons.Dot,oScreen,3,5,(21,9),white)
+    drawChar(list_set.Dot,oScreen,3,5,(21,9),white)
     if (int(minute)<10):
-        drawChar(icons.num_0,oScreen,3,5,post7,white)
+        drawChar(list_set.num_0,oScreen,3,5,post7,white)
         drawChar(numberIcon(minute),oScreen,3,5,post8,white)
     elif (int(minute)>10):
         drawChar(numberIcon(minute[0]),oScreen,3,5,post7,white)
