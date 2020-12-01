@@ -80,7 +80,7 @@ def weather(oScreen):
         drawChar(list_set.Sun,oScreen,32,16,(0,0),2)
     elif weather == '흐림':
         drawChar(icon.Fog,oScreen,32,16,(0,0),2)
-    elif weather == '구름 많음':
+    elif weather == '구름많음':
         drawChar(list_set.Cloud,oScreen,32,16,(0,0),2)
     elif weather == '비':
         drawChar(list_set.Rain,oScreen,32,16,(0,0),2)
