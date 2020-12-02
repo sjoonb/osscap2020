@@ -23,7 +23,7 @@ $ sudo pip install pyaudio
 </code>
 </pre>
 
-## stt 설정
+## stt 설치
 참고:  https://webnautes.tistory.com/1247   
 - 1번 부터 14번까지만 진행 (15번 부터는 윈도우 용도)    
     
@@ -45,6 +45,8 @@ $ cd /home/pi/osscap2020/stt/microphone
 $ pip3 install -r requirements.txt
 </code>
 </pre>
+
+### stt 설치 오류시
 
 ## Final_Code_Set 라이브러리 설치
 
