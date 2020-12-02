@@ -69,7 +69,6 @@ pip3 install urlib
 pip3 install requests
 pip3 install pygame
 pip3 install RPi.GPIO
-pip3 install 
 </code>
 </pre>
 이 외에도 module 이 없다는 오류가 있을시
