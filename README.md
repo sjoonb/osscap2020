@@ -71,7 +71,7 @@ pip3 install pygame
 pip3 install RPi.GPIO
 </code>
 </pre>
-이 외에도 module 이 없다는 오류가 있을시
+혹여 이 외에도 module 이 없다는 오류가 있다면
 <pre>
 <code>
 $ pip3 install (modulename)
