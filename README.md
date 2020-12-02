@@ -27,8 +27,7 @@ $ sudo pip install pyaudio
 참고:  https://webnautes.tistory.com/1247   
 - 1번 부터 14번까지만 진행 (15번 부터는 윈도우 용)    
     
-이후 terminal 창에 입력       
-이 때, [FILE_NAME] 은 본인이 다운로드한 .json 파일의 이름을 입력해야 한다      
+이후 terminal 창에 입력 ([FILE_NAME] 은 본인이 다운로드한 .json 파일의 이름을 입력해야 한다)      
 <pre>
 <code>
 $ export GOOGLE_APPLICATION_CREDENTIALS="/home/user/Downloads/[FILE_NAME].json"
