@@ -93,6 +93,8 @@ $ python3 main.py
 음성 인식 및 출력은 한국어로 이루어진다.
 각 기능에서 선택할 수 있는 기능을 블럭으로 구분하였다.
 
+시연 영상 참고: https://www.youtube.com/watch?v=hBY7BBqAaM0&feature=youtu.be
+
 메인  
 > 날씨 - 날씨 모듈을 실행한다    
 >> 날씨 - 한번더 '날씨' 음성 입력시, 크롤링을 통한 음성출력이 이루어진다  
