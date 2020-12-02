@@ -46,7 +46,16 @@ $ pip3 install -r requirements.txt
 </code>
 </pre>
 
-### stt 설치 오류시
+### stt 설치 오류 시
+
+- cloud.google.com/docs/authentication/getting-started 링크가 뜨며 실행이 안될 시
+<pre>
+<code>
+$ export GOOGLE_APPLICATION_CREDENTIALS="/home/user/Downloads/[FILE_NAME].json"
+</pre>
+</code>
+- stt [Errno -9999] Unanticipated host error     
+라즈베리파이 오른쪽 위에 볼륨 아이콘 우클릭하여 사용할 마이크, 스피커 장비 직접 선택해줘야함
 
 ## Final_Code_Set 라이브러리 설치
 
