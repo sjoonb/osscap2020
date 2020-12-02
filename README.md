@@ -93,7 +93,7 @@ $ python3 main.py
 음성 인식 및 출력은 한국어로 이루어진다.
 각 기능에서 선택할 수 있는 기능을 블럭으로 구분하였다.
 
-시연 영상 참고: https://www.youtube.com/watch?v=hBY7BBqAaM0&feature=youtu.be
+
 
 메인  
 > 날씨 - 날씨 모듈을 실행한다    
@@ -127,3 +127,4 @@ $ python3 main.py
 >>
 >> 뒤로 - 메인으로 이동한다   
 
+시연 영상 참고: https://www.youtube.com/watch?v=hBY7BBqAaM0&feature=youtu.be
